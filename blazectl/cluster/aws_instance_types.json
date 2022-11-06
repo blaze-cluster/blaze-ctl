@@ -1,0 +1,2530 @@
+{
+  "a1.medium": {
+    "cpu": "840m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1351Mi",
+    "pods": "8",
+    "vpc.amazonaws.com/pod-eni": "10"
+  },
+  "a1.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3014Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "a1.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6484Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "a1.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "a1.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27281Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "a1.metal": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27281Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c4.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "2778Mi",
+    "pods": "29"
+  },
+  "c4.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6011Mi",
+    "pods": "58"
+  },
+  "c4.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "13115Mi",
+    "pods": "58"
+  },
+  "c4.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "25387Mi",
+    "pods": "234"
+  },
+  "c4.8xlarge": {
+    "cpu": "35740m",
+    "ephemeral-storage": "18Gi",
+    "memory": "53803Mi",
+    "pods": "234"
+  },
+  "c5.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3014Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "c5.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6484Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "c5.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "c5.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27281Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c5.9xlarge": {
+    "cpu": "35740m",
+    "ephemeral-storage": "18Gi",
+    "memory": "65169Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c5.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "87902Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c5.18xlarge": {
+    "cpu": "71650m",
+    "ephemeral-storage": "18Gi",
+    "memory": "127834Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c5.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "173300Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c5.metal": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "173300Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c5a.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3014Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "c5a.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6484Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "c5a.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "c5a.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27281Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c5a.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c5a.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "87902Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c5a.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "112679Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c5a.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "173300Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c5d.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3014Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "c5d.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6484Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "c5d.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "c5d.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27281Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c5d.9xlarge": {
+    "cpu": "35740m",
+    "ephemeral-storage": "18Gi",
+    "memory": "65169Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c5d.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "87902Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c5d.18xlarge": {
+    "cpu": "71650m",
+    "ephemeral-storage": "18Gi",
+    "memory": "127834Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c5d.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "173300Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c5d.metal": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "173300Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c5n.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "4198Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "c5n.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "8852Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "c5n.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "18798Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "c5n.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "36753Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c5n.9xlarge": {
+    "cpu": "35740m",
+    "ephemeral-storage": "18Gi",
+    "memory": "87902Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c5n.18xlarge": {
+    "cpu": "71650m",
+    "ephemeral-storage": "18Gi",
+    "memory": "173300Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c5n.metal": {
+    "cpu": "71650m",
+    "ephemeral-storage": "18Gi",
+    "memory": "173300Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6a.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3014Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "c6a.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6484Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "c6a.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "c6a.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27281Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c6a.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "84"
+  },
+  "c6a.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "87902Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "114"
+  },
+  "c6a.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "112679Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6a.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "173300Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6a.32xlarge": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "233921Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6a.48xlarge": {
+    "cpu": "191350m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6a.metal": {
+    "cpu": "191350m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6g.medium": {
+    "cpu": "840m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1351Mi",
+    "pods": "8",
+    "vpc.amazonaws.com/pod-eni": "4"
+  },
+  "c6g.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3014Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "c6g.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6484Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "c6g.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "c6g.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27281Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c6g.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c6g.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "87902Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c6g.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "112679Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6g.metal": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "112679Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6gd.medium": {
+    "cpu": "840m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1351Mi",
+    "pods": "8",
+    "vpc.amazonaws.com/pod-eni": "4"
+  },
+  "c6gd.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3014Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "c6gd.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6484Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "c6gd.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "c6gd.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27281Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c6gd.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c6gd.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "87902Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c6gd.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "112679Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6gd.metal": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "112679Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6gn.medium": {
+    "cpu": "840m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1351Mi",
+    "pods": "8",
+    "vpc.amazonaws.com/pod-eni": "4"
+  },
+  "c6gn.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3014Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "c6gn.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6484Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "c6gn.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "c6gn.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27281Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c6gn.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c6gn.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "87902Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c6gn.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "112679Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6i.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3014Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "c6i.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6484Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "c6i.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "c6i.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27281Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "c6i.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "84"
+  },
+  "c6i.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "87902Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "114"
+  },
+  "c6i.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "112679Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6i.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "173300Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6i.32xlarge": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "233921Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "c6i.metal": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "233921Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "d2.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27796Mi",
+    "pods": "58"
+  },
+  "d2.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "56686Mi",
+    "pods": "58"
+  },
+  "d2.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "112529Mi",
+    "pods": "234"
+  },
+  "d2.8xlarge": {
+    "cpu": "35740m",
+    "ephemeral-storage": "18Gi",
+    "memory": "228087Mi",
+    "pods": "234"
+  },
+  "d3.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29745Mi",
+    "pods": "10",
+    "vpc.amazonaws.com/pod-eni": "42"
+  },
+  "d3.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "59967Mi",
+    "pods": "18",
+    "vpc.amazonaws.com/pod-eni": "92"
+  },
+  "d3.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "120368Mi",
+    "pods": "38",
+    "vpc.amazonaws.com/pod-eni": "118"
+  },
+  "d3.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "241379Mi",
+    "pods": "59",
+    "vpc.amazonaws.com/pod-eni": "119"
+  },
+  "g4dn.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14381Mi",
+    "nvidia.com/gpu": "1",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "39"
+  },
+  "g4dn.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29536Mi",
+    "nvidia.com/gpu": "1",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "39"
+  },
+  "g4dn.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "59846Mi",
+    "nvidia.com/gpu": "1",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "59"
+  },
+  "g4dn.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "120148Mi",
+    "nvidia.com/gpu": "1",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "58"
+  },
+  "g4dn.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "178833Mi",
+    "nvidia.com/gpu": "4",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "g4dn.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "241390Mi",
+    "nvidia.com/gpu": "1",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "118"
+  },
+  "g4dn.metal": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "nvidia.com/gpu": "8",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "g5.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "nvidia.com/gpu": "1",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "4"
+  },
+  "g5.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "nvidia.com/gpu": "1",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "17"
+  },
+  "g5.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "nvidia.com/gpu": "1",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "34"
+  },
+  "g5.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "nvidia.com/gpu": "1",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "84"
+  },
+  "g5.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "173300Mi",
+    "nvidia.com/gpu": "4",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "g5.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "239454Mi",
+    "nvidia.com/gpu": "1",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "114"
+  },
+  "g5.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "nvidia.com/gpu": "4",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "g5.48xlarge": {
+    "cpu": "191350m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "nvidia.com/gpu": "8",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "i2.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27796Mi",
+    "pods": "58"
+  },
+  "i2.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "56686Mi",
+    "pods": "58"
+  },
+  "i2.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "112529Mi",
+    "pods": "234"
+  },
+  "i2.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "228087Mi",
+    "pods": "234"
+  },
+  "i3.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "13670Mi",
+    "pods": "29"
+  },
+  "i3.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27796Mi",
+    "pods": "58"
+  },
+  "i3.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "56686Mi",
+    "pods": "58"
+  },
+  "i3.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "112529Mi",
+    "pods": "234"
+  },
+  "i3.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "228087Mi",
+    "pods": "234"
+  },
+  "i3.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "453671Mi",
+    "pods": "737"
+  },
+  "i3.metal": {
+    "cpu": "71650m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "120"
+  },
+  "i3en.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14381Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "5"
+  },
+  "i3en.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "12"
+  },
+  "i3en.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "59527Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "28"
+  },
+  "i3en.3xlarge": {
+    "cpu": "11800m",
+    "ephemeral-storage": "18Gi",
+    "memory": "89838Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "i3en.6xlarge": {
+    "cpu": "23770m",
+    "ephemeral-storage": "18Gi",
+    "memory": "178833Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "i3en.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "360695Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "i3en.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "i3en.metal": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "inf1.xlarge": {
+    "aws.amazon.com/neuron": "1",
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6704Mi",
+    "pods": "38",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "inf1.2xlarge": {
+    "aws.amazon.com/neuron": "1",
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14282Mi",
+    "pods": "38",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "inf1.6xlarge": {
+    "aws.amazon.com/neuron": "4",
+    "cpu": "23770m",
+    "ephemeral-storage": "18Gi",
+    "memory": "42436Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "inf1.24xlarge": {
+    "aws.amazon.com/neuron": "16",
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "177876Mi",
+    "pods": "321",
+    "vpc.amazonaws.com/pod-eni": "111"
+  },
+  "m4.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6902Mi",
+    "pods": "20"
+  },
+  "m4.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58"
+  },
+  "m4.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58"
+  },
+  "m4.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234"
+  },
+  "m4.10xlarge": {
+    "cpu": "39730m",
+    "ephemeral-storage": "18Gi",
+    "memory": "148523Mi",
+    "pods": "234"
+  },
+  "m4.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "239454Mi",
+    "pods": "234"
+  },
+  "m5.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6803Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "m5.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "m5.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "m5.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m5.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m5.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "178833Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m5.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "233921Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m5.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m5.metal": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "120"
+  },
+  "m5a.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6803Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "m5a.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "m5a.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "m5a.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m5a.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m5a.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "178833Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m5a.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "233921Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m5a.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m5ad.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6803Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "m5ad.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "m5ad.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "m5ad.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m5ad.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m5ad.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "178833Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m5ad.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "233921Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m5ad.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m5d.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6803Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "m5d.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "m5d.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "m5d.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m5d.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m5d.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "178833Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m5d.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "233921Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m5d.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m5d.metal": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m6a.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6803Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "m6a.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "m6a.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "m6a.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m6a.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "84"
+  },
+  "m6a.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "178833Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "114"
+  },
+  "m6a.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "233921Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m6a.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m6a.32xlarge": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m6a.48xlarge": {
+    "cpu": "191350m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m6a.metal": {
+    "cpu": "191350m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m6g.medium": {
+    "cpu": "840m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3245Mi",
+    "pods": "8",
+    "vpc.amazonaws.com/pod-eni": "4"
+  },
+  "m6g.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6803Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "m6g.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "m6g.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "m6g.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m6g.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m6g.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "178833Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m6g.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "233921Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m6g.metal": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "233921Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m6gd.medium": {
+    "cpu": "840m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3245Mi",
+    "pods": "8",
+    "vpc.amazonaws.com/pod-eni": "4"
+  },
+  "m6gd.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6803Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "m6gd.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "m6gd.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "m6gd.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m6gd.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m6gd.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "178833Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m6gd.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "233921Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m6gd.metal": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "233921Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m6i.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6803Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "m6i.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "m6i.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "m6i.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "57591Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "m6i.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "84"
+  },
+  "m6i.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "178833Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "114"
+  },
+  "m6i.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "233921Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m6i.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m6i.32xlarge": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "m6i.metal": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "p2.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "56686Mi",
+    "nvidia.com/gpu": "1",
+    "pods": "58"
+  },
+  "p2.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "459204Mi",
+    "nvidia.com/gpu": "8",
+    "pods": "234"
+  },
+  "p2.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "690321Mi",
+    "nvidia.com/gpu": "16",
+    "pods": "234"
+  },
+  "r3.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "13434Mi",
+    "pods": "29"
+  },
+  "r3.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27796Mi",
+    "pods": "58"
+  },
+  "r3.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "56686Mi",
+    "pods": "58"
+  },
+  "r3.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "112529Mi",
+    "pods": "234"
+  },
+  "r3.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "228087Mi",
+    "pods": "234"
+  },
+  "r4.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "13670Mi",
+    "pods": "29"
+  },
+  "r4.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "27796Mi",
+    "pods": "58"
+  },
+  "r4.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "56686Mi",
+    "pods": "58"
+  },
+  "r4.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "112529Mi",
+    "pods": "234"
+  },
+  "r4.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "228087Mi",
+    "pods": "234"
+  },
+  "r4.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "453671Mi",
+    "pods": "737"
+  },
+  "r5.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14381Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "r5.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "r5.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "59527Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "r5.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "239454Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "360695Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r5.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r5.metal": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "120"
+  },
+  "r5a.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14381Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "r5a.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "r5a.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "59527Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "r5a.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5a.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "239454Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5a.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "360695Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5a.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r5a.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r5ad.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14381Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "r5ad.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "r5ad.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "59527Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "r5ad.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5ad.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "239454Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5ad.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "360695Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5ad.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r5ad.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r5d.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14381Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "r5d.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "r5d.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "59527Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "r5d.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5d.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "239454Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5d.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "360695Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5d.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r5d.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r5d.metal": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r5n.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14381Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "r5n.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "r5n.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "59527Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "r5n.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5n.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "239454Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5n.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "360695Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r5n.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r5n.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r5n.metal": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r6a.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14381Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "r6a.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "r6a.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "59527Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "r6a.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r6a.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "239454Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "84"
+  },
+  "r6a.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "360695Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "114"
+  },
+  "r6a.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r6a.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r6a.32xlarge": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "961370Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r6a.48xlarge": {
+    "cpu": "191350m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1446337Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r6a.metal": {
+    "cpu": "191350m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1446337Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r6g.medium": {
+    "cpu": "840m",
+    "ephemeral-storage": "18Gi",
+    "memory": "7034Mi",
+    "pods": "8",
+    "vpc.amazonaws.com/pod-eni": "4"
+  },
+  "r6g.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14381Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "r6g.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "r6g.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "59527Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "r6g.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r6g.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "239454Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r6g.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "360695Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r6g.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r6g.metal": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r6gd.medium": {
+    "cpu": "840m",
+    "ephemeral-storage": "18Gi",
+    "memory": "7034Mi",
+    "pods": "8",
+    "vpc.amazonaws.com/pod-eni": "4"
+  },
+  "r6gd.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14381Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "r6gd.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "r6gd.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "59527Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "r6gd.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r6gd.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "239454Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r6gd.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "360695Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r6gd.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r6gd.metal": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r6i.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14381Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "9"
+  },
+  "r6i.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "18"
+  },
+  "r6i.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "59527Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "38"
+  },
+  "r6i.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "118212Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "r6i.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "239454Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "84"
+  },
+  "r6i.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "360695Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "114"
+  },
+  "r6i.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "476404Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r6i.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "718887Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r6i.32xlarge": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "961370Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "r6i.metal": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "961370Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "t2.nano": {
+    "cpu": "840m",
+    "ephemeral-storage": "18Gi",
+    "memory": "-26Mi",
+    "pods": "4"
+  },
+  "t2.micro": {
+    "cpu": "840m",
+    "ephemeral-storage": "18Gi",
+    "memory": "448Mi",
+    "pods": "4"
+  },
+  "t2.small": {
+    "cpu": "840m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1318Mi",
+    "pods": "11"
+  },
+  "t2.medium": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3146Mi",
+    "pods": "17"
+  },
+  "t2.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6737Mi",
+    "pods": "35"
+  },
+  "t2.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14216Mi",
+    "pods": "44"
+  },
+  "t2.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29371Mi",
+    "pods": "44"
+  },
+  "t3.nano": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "-26Mi",
+    "pods": "4"
+  },
+  "t3.micro": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "448Mi",
+    "pods": "4"
+  },
+  "t3.small": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1318Mi",
+    "pods": "11"
+  },
+  "t3.medium": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3146Mi",
+    "pods": "17"
+  },
+  "t3.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6737Mi",
+    "pods": "35"
+  },
+  "t3.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58"
+  },
+  "t3.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58"
+  },
+  "t3a.nano": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "-26Mi",
+    "pods": "4"
+  },
+  "t3a.micro": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "448Mi",
+    "pods": "4"
+  },
+  "t3a.small": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1351Mi",
+    "pods": "8"
+  },
+  "t3a.medium": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3146Mi",
+    "pods": "17"
+  },
+  "t3a.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6737Mi",
+    "pods": "35"
+  },
+  "t3a.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58"
+  },
+  "t3a.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58"
+  },
+  "t4g.nano": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "-26Mi",
+    "pods": "4"
+  },
+  "t4g.micro": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "448Mi",
+    "pods": "4"
+  },
+  "t4g.small": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1318Mi",
+    "pods": "11"
+  },
+  "t4g.medium": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3146Mi",
+    "pods": "17"
+  },
+  "t4g.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "6737Mi",
+    "pods": "35"
+  },
+  "t4g.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14062Mi",
+    "pods": "58"
+  },
+  "t4g.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58"
+  },
+  "u-6tb1.56xlarge": {
+    "cpu": "223270m",
+    "ephemeral-storage": "18Gi",
+    "memory": "5811034Mi",
+    "pods": "737"
+  },
+  "u-6tb1.112xlarge": {
+    "cpu": "446710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "5811034Mi",
+    "pods": "737"
+  },
+  "x1.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "921438Mi",
+    "pods": "234"
+  },
+  "x1.32xlarge": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1845905Mi",
+    "pods": "234"
+  },
+  "x1e.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "114784Mi",
+    "pods": "29"
+  },
+  "x1e.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "230023Mi",
+    "pods": "58"
+  },
+  "x1e.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "461140Mi",
+    "pods": "58"
+  },
+  "x1e.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "923374Mi",
+    "pods": "58"
+  },
+  "x1e.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1845905Mi",
+    "pods": "234"
+  },
+  "x1e.32xlarge": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3694839Mi",
+    "pods": "234"
+  },
+  "x2idn.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "961370Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "x2idn.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1446337Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "x2idn.32xlarge": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1931303Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "x2idn.metal": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1931303Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "x2iedn.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "120148Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "11"
+  },
+  "x2iedn.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "241390Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "27"
+  },
+  "x2iedn.4xlarge": {
+    "cpu": "15790m",
+    "ephemeral-storage": "18Gi",
+    "memory": "481937Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "x2iedn.8xlarge": {
+    "cpu": "31750m",
+    "ephemeral-storage": "18Gi",
+    "memory": "966903Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "114"
+  },
+  "x2iedn.16xlarge": {
+    "cpu": "63670m",
+    "ephemeral-storage": "18Gi",
+    "memory": "1931303Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "x2iedn.24xlarge": {
+    "cpu": "95590m",
+    "ephemeral-storage": "18Gi",
+    "memory": "2901236Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "x2iedn.32xlarge": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3871169Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "x2iedn.metal": {
+    "cpu": "127510m",
+    "ephemeral-storage": "18Gi",
+    "memory": "3871169Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "z1d.large": {
+    "cpu": "1830m",
+    "ephemeral-storage": "18Gi",
+    "memory": "14381Mi",
+    "pods": "29",
+    "vpc.amazonaws.com/pod-eni": "13"
+  },
+  "z1d.xlarge": {
+    "cpu": "3820m",
+    "ephemeral-storage": "18Gi",
+    "memory": "29217Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "28"
+  },
+  "z1d.2xlarge": {
+    "cpu": "7810m",
+    "ephemeral-storage": "18Gi",
+    "memory": "59527Mi",
+    "pods": "58",
+    "vpc.amazonaws.com/pod-eni": "58"
+  },
+  "z1d.3xlarge": {
+    "cpu": "11800m",
+    "ephemeral-storage": "18Gi",
+    "memory": "87902Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "z1d.6xlarge": {
+    "cpu": "23770m",
+    "ephemeral-storage": "18Gi",
+    "memory": "178833Mi",
+    "pods": "234",
+    "vpc.amazonaws.com/pod-eni": "54"
+  },
+  "z1d.12xlarge": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  },
+  "z1d.metal": {
+    "cpu": "47710m",
+    "ephemeral-storage": "18Gi",
+    "memory": "355162Mi",
+    "pods": "737",
+    "vpc.amazonaws.com/pod-eni": "107"
+  }
+}

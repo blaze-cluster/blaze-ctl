@@ -1,16 +1,23 @@
 [tool.poetry]
-name = "ray-kube-ctl"
+name = "blazectl"
 version = "0.1.0"
 description = ""
 authors = ["Shailendra Sharma <shailendra.sharma@gmail.com>"]
+readme = "README.md"
+packages = [{ include = "blazectl" }]
+
+[tool.poetry.scripts]
+blazectl = "blazectl.cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.9"
-typer = {extras = ["all"], version = "^0.6.1"}
+typer = { extras = ["all"], version = "^0.6.1" }
 rich = "^12.6.0"
 shellingham = "^1.5.0"
+kubernetes = "^25.3.0"
 
 [tool.poetry.dev-dependencies]
+pytest = "^5.2"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
