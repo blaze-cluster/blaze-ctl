@@ -1,55 +1,52 @@
-from dataclasses import dataclass, field
-
 from . import provisioner
-from .provisioner import WorkerBlockDeviceConfig, create_provisioner, delete_provisioner
-from .fsx_volume import FsxVolumeConfig, create_fsx_volume, delete_fsx_volume
-from .service_account import delete_service_account, create_service_account
+from .config import NamespaceConfig
+from .provisioner import ProvisionerManager
+from .fsx_volume import FsxVolumeManager
+from .service_account import ServiceAccountManager
+from ..commons.utils import Utils
 
 
-@dataclass
-class NamespaceConfig:
-    name: str
-    eks_cluster: str
-    block_device: WorkerBlockDeviceConfig = WorkerBlockDeviceConfig()
-    fsx_volumes: list[FsxVolumeConfig] = field(default_factory=list[FsxVolumeConfig])
-    sa_policy_arn: str = None
+class NamespaceManager:
+    def __init__(self, namespace_config: NamespaceConfig):
+        self.namespace_config = namespace_config
+        self.provisioner_manager = ProvisionerManager(self.namespace_config)
+        self.fsx_volume_manager = FsxVolumeManager(self.namespace_config)
+        self.service_account_manager = ServiceAccountManager(self.namespace_config)
 
+    def create_ns(self):
+        command = f"kubectl create namespace {self.namespace_config.name}"
+        Utils.run_command(command)
 
-def create_ns(config: NamespaceConfig):
-    # kubectl create namespace ${RAY_CLUSTER_NS}
+        # create head node provisioner
+        self.provisioner_manager.create_provisioner(provisioner.ProvisionerKind.HEAD)
 
-    # create head node provisioner
-    create_provisioner(config.name, config.eks_cluster, provisioner.Kind.HEAD, config.block_device)
+        # create worker node provisioner
+        self.provisioner_manager.create_provisioner(provisioner.ProvisionerKind.WORKER)
 
-    # create worker node provisioner
-    create_provisioner(config.name, config.eks_cluster, provisioner.Kind.WORKER, config.block_device)
+        # create persistent volumes
+        for fsx in self.namespace_config.fsx_volumes:
+            self.fsx_volume_manager.create_fsx_volume(fsx)
 
-    # create persistent volumes
-    for fsx in config.fsx_volumes:
-        create_fsx_volume(config.name, fsx)
+        # create service accounts
+        if self.namespace_config.sa_policy_arn is not None:
+            self.service_account_manager.create_service_account()
 
-    # create service accounts
-    if config.sa_policy_arn is not None:
-        create_service_account(config.name, config.eks_cluster, config.sa_policy_arn)
+    def delete_ns(self):
+        # delete service accounts
+        if self.namespace_config.sa_policy_arn is not None:
+            self.service_account_manager.delete_service_account()
 
-    pass
+        # delete persistent volumes
+        for fsx in self.namespace_config.fsx_volumes:
+            self.fsx_volume_manager.delete_fsx_volume(fsx)
 
+        provisioner_manager = ProvisionerManager(self.namespace_config)
 
-def delete_ns(config: NamespaceConfig):
-    # delete service accounts
-    if config.sa_policy_arn is not None:
-        delete_service_account(config.name, config.eks_cluster)
+        # delete head node provisioner
+        provisioner_manager.delete_provisioner(provisioner.ProvisionerKind.HEAD)
 
-    # delete persistent volumes
-    for fsx in config.fsx_volumes:
-        delete_fsx_volume(config.name, fsx)
+        # delete worker node provisioner
+        provisioner_manager.delete_provisioner(provisioner.ProvisionerKind.WORKER)
 
-    # delete worker node provisioner
-    delete_provisioner(config.name, config.eks_cluster, provisioner.Kind.WORKER)
-
-    # delete head node provisioner
-    delete_provisioner(config.name, config.eks_cluster, provisioner.Kind.HEAD)
-
-    # kubectl delete namespace ${RAY_CLUSTER_NS}
-
-    pass
+        command = f"kubectl delete namespace {self.namespace_config.name}"
+        Utils.run_command(command)

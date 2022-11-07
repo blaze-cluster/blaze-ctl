@@ -1,8 +1,7 @@
-
 import json
 from dataclasses import dataclass
 
-from blazectl.commons.manage_base import ManagerBase
+from blazectl.commons.utils import Utils
 from blazectl.namespace.namespace import NamespaceConfig
 
 
@@ -11,7 +10,7 @@ class ClusterSpec:
     ray_version: str = "2.0.0"
     ray_image: str = "514352861371.dkr.ecr.ap-south-1.amazonaws.com/recsys/ray-ml:2.0.1"
     busybox_image: str = "514352861371.dkr.ecr.ap-south-1.amazonaws.com/recsys/busybox:latest"
-    aws_cli_image: str = "514352861371.dkr.ecr.ap-south-1.amazonaws.com/recsys/aws-cli:latest"
+    aws_cli_image: str = "514352861371.dkr.ecr.ap-south-1.amazonaws.com/recsys/aws-app:latest"
 
 
 @dataclass
@@ -42,7 +41,7 @@ class ClusterConfig:
     spec: ClusterSpec = ClusterSpec()
 
 
-class ClusterManger(ManagerBase):
+class ClusterManger:
     def __init__(self, cluster_config: ClusterConfig):
         super().__init__()
 
@@ -53,11 +52,11 @@ class ClusterManger(ManagerBase):
 
     def create_cluster(self):
         config = self.get_cluster_config()
-        self.kubectl_apply(config)
+        Utils.kubectl_apply(config)
 
     def delete_cluster(self):
         config = self.get_cluster_config()
-        self.kubectl_delete(config)
+        Utils.kubectl_delete(config)
 
     def restart_cluster(self):
         self.delete_cluster()
@@ -65,7 +64,7 @@ class ClusterManger(ManagerBase):
 
     def print_config(self):
         config = self.get_cluster_config()
-        ManagerBase.print_data(config)
+        Utils.print_data(config)
 
     def get_cluster_config(self):
         return {
@@ -146,7 +145,7 @@ class ClusterManger(ManagerBase):
                                     "volumeMounts": self.get_volume_mounts()
                                 },
                                 {
-                                    "name": "aws-cli",
+                                    "name": "aws-app",
                                     "image": self.cluster_config.spec.aws_cli_image,
                                     "imagePullPolicy": "IfNotPresent",
                                     "command": [
@@ -217,7 +216,7 @@ class ClusterManger(ManagerBase):
                             "volumeMounts": self.get_volume_mounts()
                         },
                         {
-                            "name": "aws-cli",
+                            "name": "aws-app",
                             "image": self.cluster_config.spec.aws_cli_image,
                             "imagePullPolicy": "IfNotPresent",
                             "command": [

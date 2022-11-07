@@ -1,75 +1,67 @@
-from dataclasses import dataclass
+from .config import FsxVolumeConfig, NamespaceConfig
+from ..commons.utils import Utils
 
 
-@dataclass
-class FsxVolumeConfig:
-    volume_name: str
-    volume_size_in_gb: int
-    volume_handle: str
-    volume_dns: str
-    volume_mount_name: str
+class FsxVolumeManager:
+    def __init__(self, namespace_config: NamespaceConfig):
+        self.namespace_config = namespace_config
 
+    def create_fsx_volume(self, fsx_volume_config: FsxVolumeConfig):
+        config = self.get_config(fsx_volume_config)
+        Utils.kubectl_apply(config)
 
-def create_fsx_volume(ns: str, config: FsxVolumeConfig):
-    # envsubst < ~/icloud/ws/cluster_config/eks/ray/cluster/karpenter_head_provisioner-ns.yaml | kubectl apply -f -
-    config = get_config(ns, config)
+    def delete_fsx_volume(self, fsx_volume_config: FsxVolumeConfig):
+        config = self.get_config(fsx_volume_config)
+        Utils.kubectl_delete(config)
 
-
-def delete_fsx_volume(ns: str, config: FsxVolumeConfig):
-    # envsubst < ~/icloud/ws/cluster_config/eks/ray/cluster/karpenter_head_provisioner-ns.yaml | kubectl delete -f -
-    config = get_config(ns, config)
-
-
-def get_config(ns: str, config: FsxVolumeConfig):
-    config = [
-        {
-            "apiVersion": "v1",
-            "kind": "PersistentVolume",
-            "metadata": {
-                "name": f"{ns}-{config.volume_name}-fsx-pv"
-            },
-            "spec": {
-                "capacity": {
-                    "storage": f"{config.volume_size_in_gb}Gi"
+    def get_config(self, fsx_volume_config: FsxVolumeConfig):
+        return [
+            {
+                "apiVersion": "v1",
+                "kind": "PersistentVolume",
+                "metadata": {
+                    "name": f"{self.namespace_config.name}-{fsx_volume_config.volume_name}-fsx-pv"
                 },
-                "volumeMode": "Filesystem",
-                "accessModes": [
-                    "ReadWriteMany"
-                ],
-                "mountOptions": [
-                    "flock"
-                ],
-                "persistentVolumeReclaimPolicy": "Recycle",
-                "csi": {
-                    "driver": "fsx.csi.aws.com",
-                    "volumeHandle": config.volume_handle,
-                    "volumeAttributes": {
-                        "dnsname": config.volume_dns,
-                        "mountname": config.volume_mount_name
+                "spec": {
+                    "capacity": {
+                        "storage": f"{fsx_volume_config.volume_size_in_gb}Gi"
+                    },
+                    "volumeMode": "Filesystem",
+                    "accessModes": [
+                        "ReadWriteMany"
+                    ],
+                    "mountOptions": [
+                        "flock"
+                    ],
+                    "persistentVolumeReclaimPolicy": "Recycle",
+                    "csi": {
+                        "driver": "fsx.csi.aws.com",
+                        "volumeHandle": fsx_volume_config.volume_handle,
+                        "volumeAttributes": {
+                            "dnsname": fsx_volume_config.volume_dns,
+                            "mountname": fsx_volume_config.volume_mount_name
+                        }
                     }
                 }
-            }
-        },
-        {
-            "apiVersion": "v1",
-            "kind": "PersistentVolumeClaim",
-            "metadata": {
-                "name": f"{config.volume_name}-fsx-claim",
-                "namespace": ns
             },
-            "spec": {
-                "accessModes": [
-                    "ReadWriteMany"
-                ],
-                "storageClassName": "",
-                "resources": {
-                    "requests": {
-                        "storage": f"{config.volume_size_in_gb}Gi"
-                    }
+            {
+                "apiVersion": "v1",
+                "kind": "PersistentVolumeClaim",
+                "metadata": {
+                    "name": f"{fsx_volume_config.volume_name}-fsx-claim",
+                    "namespace": self.namespace_config.name
                 },
-                "volumeName": f"{ns}-{config.volume_name}-fsx-pv"
+                "spec": {
+                    "accessModes": [
+                        "ReadWriteMany"
+                    ],
+                    "storageClassName": "",
+                    "resources": {
+                        "requests": {
+                            "storage": f"{fsx_volume_config.volume_size_in_gb}Gi"
+                        }
+                    },
+                    "volumeName": f"{self.namespace_config.name}-{fsx_volume_config.volume_name}-fsx-pv"
+                }
             }
-        }
-    ]
-
-    return config
+        ]

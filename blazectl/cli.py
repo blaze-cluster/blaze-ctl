@@ -1,16 +1,23 @@
 import typer
 import pyfiglet
 
-from .cluster.cli import app as cluster_cli
-from .job.cli import app as job_cli
-from .workers.cli import app as workers_cli
+from cluster import cli as cluster_cli
+from job import cli as job_cli
+from namespace import cli as ns_cli
+
+app = typer.Typer(no_args_is_help=True)
 
 
-def callback():
+# @app.callback(invoke_without_command=True)
+# def callback():
+#     print(pyfiglet.figlet_format("blaze"))
+
+
+app.add_typer(ns_cli.app, name="namespace")
+app.add_typer(cluster_cli.app, name="cluster")
+app.add_typer(job_cli.app, name="job")
+# app.add_typer(workers_cli, name="workers")
+
+if __name__ == "__main__":
     print(pyfiglet.figlet_format("blaze"))
-
-
-app = typer.Typer(callback=callback)
-app.add_typer(cluster_cli, name="cluster")
-app.add_typer(job_cli, name="job")
-app.add_typer(workers_cli, name="workers")
+    app()
