@@ -1,7 +1,7 @@
 from . import provisioner
 from .config import NamespaceConfig
-from .provisioner import ProvisionerManager
 from .fsx_volume import FsxVolumeManager
+from .provisioner import ProvisionerManager
 from .service_account import ServiceAccountManager
 from ..commons.utils import Utils
 
@@ -31,6 +31,8 @@ class NamespaceManager:
         if self.namespace_config.sa_policy_arn is not None:
             self.service_account_manager.create_service_account()
 
+        self.save_config()
+
     def delete_ns(self):
         # delete service accounts
         if self.namespace_config.sa_policy_arn is not None:
@@ -50,3 +52,17 @@ class NamespaceManager:
 
         command = f"kubectl delete namespace {self.namespace_config.name}"
         Utils.run_command(command)
+        self.delete_config()
+
+    def save_config(self):
+        # TODO
+        pass
+
+    def delete_config(self):
+        # TODO
+        pass
+
+
+def load_ns(ns: str) -> NamespaceManager:
+    # TODO: load NamespaceManager from ns
+    return None
