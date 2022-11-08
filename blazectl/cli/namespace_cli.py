@@ -1,7 +1,7 @@
 import typer
 
 from blazectl.namespace.config import NamespaceConfig, WorkerBlockDeviceConfig, FsxVolumeConfig
-from blazectl.namespace.namespace import NamespaceManager, load_ns
+from blazectl.namespace.namespace import NamespaceManager
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -20,17 +20,21 @@ def create(ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
     manager = NamespaceManager(namespace_config)
     manager.create_ns()
 
+    manager.save_config()
+
 
 @app.command(no_args_is_help=True)
 def delete(ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
-    manager = load_ns(ns)
+    manager = NamespaceManager.load(ns)
     manager.delete_ns()
+
+    manager.soft_delete_config()
 
 
 @app.command(no_args_is_help=True)
 def set_gpu(ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
             enabled: bool = typer.Option(..., prompt=True)):
-    manager = load_ns(ns)
+    manager = NamespaceManager.load(ns)
     manager.namespace_config.gpu_enabled = enabled
     manager.save_config()
 
@@ -38,7 +42,7 @@ def set_gpu(ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
 @app.command(no_args_is_help=True)
 def set_sa_policy(ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
                   arn: str = typer.Option(..., prompt=True)):
-    manager = load_ns(ns)
+    manager = NamespaceManager.load(ns)
     if manager.namespace_config.sa_policy_arn is not None:
         manager.service_account_manager.delete_service_account()
 
@@ -54,7 +58,7 @@ def add_fsx_volume(ns: str = typer.Option(..., "--namespace", "-n", prompt=True)
                    volume_handle: str = typer.Option(..., prompt=True),
                    volume_dns: str = typer.Option(..., prompt=True),
                    volume_mount_name: str = typer.Option(..., prompt=True)):
-    manager = load_ns(ns)
+    manager = NamespaceManager.load(ns)
     fsx_volume_config = FsxVolumeConfig(volume_name,
                                         volume_size_in_gb,
                                         volume_handle,
@@ -62,13 +66,14 @@ def add_fsx_volume(ns: str = typer.Option(..., "--namespace", "-n", prompt=True)
                                         volume_mount_name)
     manager.fsx_volume_manager.create_fsx_volume(fsx_volume_config)
     manager.namespace_config.fsx_volumes.append(fsx_volume_config)
+
     manager.save_config()
 
 
 @app.command(no_args_is_help=True)
 def delete_fsx_volume(ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
                       volume_name: str = typer.Option(..., prompt=True)):
-    manager = load_ns(ns)
+    manager = NamespaceManager.load(ns)
 
     items = [(index, item) for (index, item) in enumerate(manager.namespace_config.fsx_volumes)
              if item.volume_name == volume_name]
@@ -79,4 +84,4 @@ def delete_fsx_volume(ns: str = typer.Option(..., "--namespace", "-n", prompt=Tr
     for (index, item) in items:
         manager.fsx_volume_manager.delete_fsx_volume(item)
 
-
+    manager.save_config()

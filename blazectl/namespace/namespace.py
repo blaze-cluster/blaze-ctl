@@ -1,3 +1,9 @@
+from __future__ import annotations
+
+import dataclasses
+
+import dacite
+
 from . import provisioner
 from .config import NamespaceConfig
 from .fsx_volume import FsxVolumeManager
@@ -31,8 +37,6 @@ class NamespaceManager:
         if self.namespace_config.sa_policy_arn is not None:
             self.service_account_manager.create_service_account()
 
-        self.save_config()
-
     def delete_ns(self):
         # delete service accounts
         if self.namespace_config.sa_policy_arn is not None:
@@ -52,17 +56,31 @@ class NamespaceManager:
 
         command = f"kubectl delete namespace {self.namespace_config.name}"
         Utils.run_command(command)
-        self.delete_config()
+
+    def config_as_dict(self):
+        return dataclasses.asdict(self.namespace_config)
+
+    @staticmethod
+    def config_name(ns: str):
+        return f"namespace/{ns}"
 
     def save_config(self):
-        # TODO
-        pass
+        Utils.save_config(NamespaceManager.config_name(self.namespace_config.name),
+                          self.config_as_dict())
+
+    def soft_delete_config(self):
+        self.namespace_config.__deleted__ = True
+        self.save_config()
 
     def delete_config(self):
-        # TODO
-        pass
+        Utils.delete_config(NamespaceManager.config_name(self.namespace_config.name), )
 
+    @staticmethod
+    def load_config(name: str) -> NamespaceConfig:
+        config = Utils.load_config(NamespaceManager.config_name(name))
+        return dacite.from_dict(data_class=NamespaceConfig, data=config)
 
-def load_ns(ns: str) -> NamespaceManager:
-    # TODO: load NamespaceManager from ns
-    return None
+    @staticmethod
+    def load(name: str) -> NamespaceManager:
+        config = NamespaceManager.load_config(name)
+        return NamespaceManager(config)

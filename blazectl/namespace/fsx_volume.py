@@ -7,14 +7,14 @@ class FsxVolumeManager:
         self.namespace_config = namespace_config
 
     def create_fsx_volume(self, fsx_volume_config: FsxVolumeConfig):
-        config = self.get_config(fsx_volume_config)
+        config = self.get_kubectl_config(fsx_volume_config)
         Utils.kubectl_apply(config)
 
     def delete_fsx_volume(self, fsx_volume_config: FsxVolumeConfig):
-        config = self.get_config(fsx_volume_config)
+        config = self.get_kubectl_config(fsx_volume_config)
         Utils.kubectl_delete(config)
 
-    def get_config(self, fsx_volume_config: FsxVolumeConfig):
+    def get_kubectl_config(self, fsx_volume_config: FsxVolumeConfig):
         return [
             {
                 "apiVersion": "v1",

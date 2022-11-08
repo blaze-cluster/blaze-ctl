@@ -1,5 +1,5 @@
-from dataclasses import dataclass, field
 import enum
+from dataclasses import dataclass, field
 
 
 class ProvisionerKind(enum.Enum):
@@ -30,3 +30,4 @@ class NamespaceConfig:
     fsx_volumes: list[FsxVolumeConfig] = field(default_factory=list[FsxVolumeConfig])
     sa_policy_arn: str = None
     gpu_enabled: bool = False
+    __deleted__: bool = False

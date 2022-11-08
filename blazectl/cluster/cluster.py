@@ -1,8 +1,14 @@
+from __future__ import annotations
+
+import dataclasses
 import json
+from copy import deepcopy
 from dataclasses import dataclass
 
+import dacite
+
 from blazectl.commons.utils import Utils
-from blazectl.namespace.namespace import NamespaceConfig
+from blazectl.namespace.namespace import NamespaceManager
 
 
 @dataclass
@@ -34,39 +40,74 @@ class WorkerConfig:
 @dataclass
 class ClusterConfig:
     name: str
-    ns: NamespaceConfig
+    ns: str
     head: HeadConfig
     workers: list[WorkerConfig]
     autoscaler: AutoscalerSpec = AutoscalerSpec()
     spec: ClusterSpec = ClusterSpec()
+    __deleted__: bool = False
 
 
-class ClusterManger:
+class ClusterManager:
     def __init__(self, cluster_config: ClusterConfig):
-        super().__init__()
-
         self.cluster_config = cluster_config
+
+        self.ns = NamespaceManager.load_config(cluster_config.ns)
 
         with open("aws_instance_types.json") as file:
             self.instance_types_map = json.load(file)
 
     def create_cluster(self):
-        config = self.get_cluster_config()
-        Utils.kubectl_apply(config)
+        Utils.kubectl_apply(self.get_kubectl_config())
+
+    def stop_cluster(self, stop_head: bool = False):
+        if stop_head:
+            Utils.kubectl_delete(self.get_kubectl_config())
+        else:
+            # we only remove workers by setting their count to zero
+            cluster_config = deepcopy(self.cluster_config)
+            for worker in cluster_config.workers:
+                worker.count = 0
+
+            temp_cluster_mgr = ClusterManager(cluster_config)
+            Utils.kubectl_apply(temp_cluster_mgr.get_kubectl_config())
 
     def delete_cluster(self):
-        config = self.get_cluster_config()
-        Utils.kubectl_delete(config)
+        Utils.kubectl_delete(self.get_kubectl_config())
 
-    def restart_cluster(self):
-        self.delete_cluster()
+    def restart_cluster(self, restart_head: bool = False):
+        self.stop_cluster(stop_head=restart_head)
         self.create_cluster()
 
-    def print_config(self):
-        config = self.get_cluster_config()
-        Utils.print_data(config)
+    def config_as_dict(self):
+        return dataclasses.asdict(self.cluster_config)
 
-    def get_cluster_config(self):
+    @staticmethod
+    def config_name(name: str, ns: str):
+        return f"cluster/{ns}/{name}"
+
+    def save_config(self):
+        Utils.save_config(ClusterManager.config_name(self.cluster_config.name, self.ns.name),
+                          self.config_as_dict())
+
+    def soft_delete_config(self):
+        self.cluster_config.__deleted__ = True
+        self.save_config()
+
+    def delete_config(self):
+        Utils.delete_config(ClusterManager.config_name(self.cluster_config.name, self.ns.name))
+
+    @staticmethod
+    def load_config(name: str, ns: str) -> ClusterConfig:
+        config = Utils.load_config(ClusterManager.config_name(name, ns))
+        return dacite.from_dict(data_class=ClusterConfig, data=config)
+
+    @staticmethod
+    def load(name: str, ns: str) -> ClusterManager:
+        config = ClusterManager.load_config(name, ns)
+        return ClusterManager(config)
+
+    def get_kubectl_config(self):
         return {
             "apiVersion": "ray.io/v1alpha1",
             "kind": "RayCluster",
@@ -75,7 +116,7 @@ class ClusterManger:
                     "controller-tools.k8s.io": "1.0"
                 },
                 "name": self.cluster_config.name,
-                "namespace": self.cluster_config.ns.name
+                "namespace": self.ns.name
             },
             "spec": {
                 "rayVersion": self.cluster_config.spec.ray_version,
@@ -108,7 +149,7 @@ class ClusterManger:
                             "serviceAccountName": self.get_service_account(),
                             "nodeSelector": {
                                 "node.kubernetes.io/instance-type": self.cluster_config.head.instance_type,
-                                "ray-cluster/namespace": self.cluster_config.ns.name,
+                                "ray-cluster/namespace": self.ns.name,
                                 "ray-cluster/node-type": "head"
                             },
                             "containers": [
@@ -177,7 +218,7 @@ class ClusterManger:
                     "serviceAccount": self.get_service_account(),
                     "nodeSelector": {
                         "node.kubernetes.io/instance-type": worker_config.instance_type,
-                        "ray-cluster/namespace": self.cluster_config.ns.name,
+                        "ray-cluster/namespace": self.ns.name,
                         "ray-cluster/node-type": "worker"
                     },
                     "volumes": self.get_volumes(),
@@ -231,8 +272,8 @@ class ClusterManger:
 
     def get_service_account(self):
         service_account = None
-        if self.cluster_config.ns.sa_policy_arn is not None:
-            service_account = f"{self.cluster_config.ns.name}-isra"
+        if self.ns.sa_policy_arn is not None:
+            service_account = f"{self.ns.name}-isra"
         return service_account
 
     def get_volumes(self):
@@ -247,7 +288,7 @@ class ClusterManger:
             }
         ]
 
-        for fsx in self.cluster_config.ns.fsx_volumes:
+        for fsx in self.ns.fsx_volumes:
             volumes.append({
                 "name": f"{fsx.volume_name}-store",
                 "persistentVolumeClaim": {
@@ -269,7 +310,7 @@ class ClusterManger:
             }
         ]
 
-        for fsx in self.cluster_config.ns.fsx_volumes:
+        for fsx in self.ns.fsx_volumes:
             mounts.append({
                 "mountPath": f"/mnt/{fsx.volume_name}",
                 "name": f"{fsx.volume_name}-store"

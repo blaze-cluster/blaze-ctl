@@ -1,3 +1,6 @@
+import dataclasses
+from typing import Dict
+
 from .config import ProvisionerKind, NamespaceConfig
 from ..commons.utils import Utils
 
@@ -7,11 +10,11 @@ class ProvisionerManager:
         self.namespace_config = namespace_config
 
     def create_provisioner(self, kind: ProvisionerKind):
-        config = self.get_config(kind)
+        config = self.get_kubectl_config(kind)
         Utils.kubectl_apply(config)
 
     def delete_provisioner(self, kind: ProvisionerKind):
-        config = self.get_config(kind)
+        config = self.get_kubectl_config(kind)
         Utils.kubectl_delete(config)
 
     # TODO: allow volume size to be configurable
@@ -20,7 +23,7 @@ class ProvisionerManager:
     # TODO: allow instance-generation to be configurable
     # TODO: allow instance-size exclude to be configurable
     # TODO: allow instance-size include to be configurable
-    def get_config(self, kind: ProvisionerKind):
+    def get_kubectl_config(self, kind: ProvisionerKind):
         return [
             {
                 "apiVersion": "karpenter.sh/v1alpha5",
