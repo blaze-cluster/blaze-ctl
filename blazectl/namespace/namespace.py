@@ -57,6 +57,13 @@ class NamespaceManager:
         command = f"kubectl delete namespace {self.namespace_config.name}"
         Utils.run_command(command)
 
+    def update_provisioner(self):
+        # re-create head node provisioner
+        self.provisioner_manager.create_provisioner(provisioner.ProvisionerKind.HEAD)
+
+        # re-create worker node provisioner
+        self.provisioner_manager.create_provisioner(provisioner.ProvisionerKind.WORKER)
+
     def config_as_dict(self):
         return dataclasses.asdict(self.namespace_config)
 

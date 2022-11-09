@@ -13,45 +13,27 @@ from typing import Dict
 class Utils:
     @staticmethod
     def kubectl_apply(data):
-        print(json.dumps(data, indent=2))
-        spec = json.dumps(data)
-
-        # subprocess.check_output(["kubectl", "apply", "-f", "-"], input=spec)
-
-        kubectl = subprocess.Popen(["kubectl", "apply", "-f", "-"],
-                                   stdin=subprocess.PIPE,
-                                   stdout=subprocess.PIPE,
-                                   shell=True)
-        out, err = kubectl.communicate(spec.encode('utf-8'))
-        while kubectl.returncode is None:
-            kubectl.poll()
-
-        if out:
-            print("Output:")
-            print(out)
-        if err:
-            print("Error:")
-            print(err)
+        Utils.kubectl_data_command("apply", data)
 
     @staticmethod
     def kubectl_delete(data):
-        print(json.dumps(data, indent=2))
+        Utils.kubectl_data_command("delete", data)
+
+    @staticmethod
+    def kubectl_data_command(command, data):
         spec = json.dumps(data)
 
-        kubectl = subprocess.Popen(["kubectl", "delete", "-f", "-"], stdin=subprocess.PIPE, shell=True)
-        out, err = kubectl.communicate(spec.encode('utf-8'))
-        if out:
-            print("Output:")
-            print(out)
-        if err:
-            print("Error:")
-            print(err)
-        # subprocess.check_output(["kubectl", "delete", "-f", "-"], input=spec)
+        kubectl = subprocess.Popen(f"kubectl {command} -f -",
+                                   stdin=subprocess.PIPE,
+                                   shell=True)
+        kubectl.communicate(spec.encode('utf-8'))
+        while kubectl.returncode is None:
+            kubectl.poll()
 
     @staticmethod
     def run_command(command):
         output = subprocess.check_output(command, shell=True)
-        print(output)
+        print(output.decode('utf-8').rstrip())
 
     @staticmethod
     def save_config(path: str, data: Dict):

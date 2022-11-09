@@ -36,6 +36,8 @@ def set_gpu(ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
             enabled: bool = typer.Option(..., prompt=True)):
     manager = NamespaceManager.load(ns)
     manager.namespace_config.gpu_enabled = enabled
+    manager.update_provisioner()
+
     manager.save_config()
 
 

@@ -1,5 +1,6 @@
 import enum
 from dataclasses import dataclass, field
+from typing import Optional
 
 
 class ProvisionerKind(enum.Enum):
@@ -28,6 +29,6 @@ class NamespaceConfig:
     eks_cluster: str
     block_device: WorkerBlockDeviceConfig = WorkerBlockDeviceConfig()
     fsx_volumes: list[FsxVolumeConfig] = field(default_factory=list[FsxVolumeConfig])
-    sa_policy_arn: str = None
+    sa_policy_arn: Optional[str] = None
     gpu_enabled: bool = False
     __deleted__: bool = False

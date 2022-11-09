@@ -22,11 +22,13 @@ class ProvisionerManager:
 
     def create_provisioner(self, kind: ProvisionerKind):
         config = self.get_kubectl_config(kind)
-        Utils.kubectl_apply(config)
+        for c in config:
+            Utils.kubectl_apply(c)
 
     def delete_provisioner(self, kind: ProvisionerKind):
         config = self.get_kubectl_config(kind)
-        Utils.kubectl_delete(config)
+        for c in config:
+            Utils.kubectl_delete(c)
 
     def get_kubectl_config(self, kind: ProvisionerKind):
         allowed_instance_families = ALLOWED_INSTANCE_FAMILIES
@@ -38,15 +40,15 @@ class ProvisionerManager:
                 "apiVersion": "karpenter.sh/v1alpha5",
                 "kind": "Provisioner",
                 "metadata": {
-                    "name": f"blaze-cluster-{self.namespace_config.name}-{kind.name}"
+                    "name": f"blaze-cluster-{self.namespace_config.name}-{kind.value}"
                 },
                 "spec": {
                     "labels": {
-                        "intent": f"blaze-cluster-{kind.name}-node",
+                        "intent": f"blaze-cluster-{kind.value}-node",
                         "provisioner/type": "karpenter",
-                        "provisioner/name": f"blaze-cluster-{self.namespace_config.name}-{kind.name}",
+                        "provisioner/name": f"blaze-cluster-{self.namespace_config.name}-{kind.value}",
                         "blaze-cluster/namespace": self.namespace_config.name,
-                        "blaze-cluster/node-type": kind.name
+                        "blaze-cluster/node-type": kind.value
                     },
                     "requirements": [
                         {
@@ -85,7 +87,7 @@ class ProvisionerManager:
                     "ttlSecondsUntilExpired": 2592000,
                     "ttlSecondsAfterEmpty": 20,
                     "providerRef": {
-                        "name": f"blaze-cluster-{self.namespace_config.name}-{kind.name}"
+                        "name": f"blaze-cluster-{self.namespace_config.name}-{kind.value}"
                     }
                 }
             },
@@ -93,7 +95,7 @@ class ProvisionerManager:
                 "apiVersion": "karpenter.k8s.aws/v1alpha1",
                 "kind": "AWSNodeTemplate",
                 "metadata": {
-                    "name": f"blaze-cluster-{self.namespace_config.name}-{kind.name}"
+                    "name": f"blaze-cluster-{self.namespace_config.name}-{kind.value}"
                 },
                 "spec": {
                     "blockDeviceMappings": [
@@ -112,11 +114,11 @@ class ProvisionerManager:
                         "alpha.eksctl.io/cluster-name": self.namespace_config.eks_cluster
                     },
                     "tags": {
-                        "intent": f"blaze-cluster-{kind.name}-node",
+                        "intent": f"blaze-cluster-{kind.value}-node",
                         "provisioner/type": "karpenter",
-                        "provisioner/name": f"blaze-cluster-{self.namespace_config.name}-{kind.name}",
+                        "provisioner/name": f"blaze-cluster-{self.namespace_config.name}-{kind.value}",
                         "blaze-cluster/namespace": self.namespace_config.name,
-                        "blaze-cluster/node-type": kind.name
+                        "blaze-cluster/node-type": kind.value
                     }
                 }
             }

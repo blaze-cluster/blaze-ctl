@@ -8,11 +8,13 @@ class FsxVolumeManager:
 
     def create_fsx_volume(self, fsx_volume_config: FsxVolumeConfig):
         config = self.get_kubectl_config(fsx_volume_config)
-        Utils.kubectl_apply(config)
+        for c in config:
+            Utils.kubectl_apply(c)
 
     def delete_fsx_volume(self, fsx_volume_config: FsxVolumeConfig):
         config = self.get_kubectl_config(fsx_volume_config)
-        Utils.kubectl_delete(config)
+        for c in config:
+            Utils.kubectl_delete(c)
 
     def get_kubectl_config(self, fsx_volume_config: FsxVolumeConfig):
         return [
