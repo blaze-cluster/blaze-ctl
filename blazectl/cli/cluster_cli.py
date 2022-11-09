@@ -1,3 +1,5 @@
+from typing import Optional
+
 import typer
 
 from blazectl.cluster.cluster import ClusterManager, ClusterConfig, HeadConfig, WorkersGroupConfig
@@ -8,8 +10,8 @@ app = typer.Typer(no_args_is_help=True)
 @app.command(no_args_is_help=True)
 def create(name: str = typer.Option(..., prompt=True),
            ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
-           head_instance_type: str = typer.Option(None),
-           default_workers_instance_type: str = typer.Option(None),
+           head_instance_type: Optional[str] = typer.Option(None),
+           default_workers_instance_type: Optional[str] = typer.Option(None),
            default_workers_count: int = typer.Option(0)):
     # build cluster config
     cluster_config = ClusterConfig(name,
