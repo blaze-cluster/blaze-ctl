@@ -1,4 +1,5 @@
 import json
+import os
 import subprocess
 from typing import Dict
 
@@ -12,11 +13,37 @@ from typing import Dict
 class Utils:
     @staticmethod
     def kubectl_apply(data):
-        pass
+        print(json.dumps(data, indent=2))
+        spec = json.dumps(data)
+
+        # subprocess.check_output(["kubectl", "apply", "-f", "-"], input=spec)
+
+        kubectl = subprocess.Popen(["kubectl", "apply", "-f", "-"],
+                                   stdin=subprocess.PIPE,
+                                   stdout=subprocess.PIPE,
+                                   shell=True)
+        out, err = kubectl.communicate(spec.encode('utf-8'))
+        if out:
+            print("Output:")
+            print(out)
+        if err:
+            print("Error:")
+            print(err)
 
     @staticmethod
     def kubectl_delete(data):
-        pass
+        print(json.dumps(data, indent=2))
+        spec = json.dumps(data)
+
+        kubectl = subprocess.Popen(["kubectl", "delete", "-f", "-"], stdin=subprocess.PIPE, shell=True)
+        out, err = kubectl.communicate(spec.encode('utf-8'))
+        if out:
+            print("Output:")
+            print(out)
+        if err:
+            print("Error:")
+            print(err)
+        # subprocess.check_output(["kubectl", "delete", "-f", "-"], input=spec)
 
     @staticmethod
     def run_command(command):
@@ -24,17 +51,20 @@ class Utils:
         print(output)
 
     @staticmethod
-    def print_data(data: Dict):
-        print(json.dumps(data, indent=2))
-
-    @staticmethod
     def save_config(path: str, data: Dict):
-        pass
+        json_object = json.dumps(data, indent=4)
+
+        # Writing to sample.json
+        with open(f"{path}.json", "w") as outfile:
+            outfile.write(json_object)
 
     @staticmethod
     def delete_config(path: str):
-        pass
+        os.remove(f"{path}.json")
 
     @staticmethod
     def load_config(path: str) -> Dict:
-        pass
+        with open(f'{path}.json', 'r') as openfile:
+            # Reading from json file
+            json_object = json.load(openfile)
+            return json_object

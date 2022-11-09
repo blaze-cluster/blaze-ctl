@@ -1,3 +1,3 @@
-from blazectl.cli import app
+from blazectl.cli.main_cli import app
 
 app(prog_name="blazectl")

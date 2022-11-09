@@ -1,6 +1,6 @@
 import typer
 
-from blazectl.cluster.cluster import ClusterManager, ClusterConfig, HeadConfig, WorkerConfig
+from blazectl.cluster.cluster import ClusterManager, ClusterConfig, HeadConfig, WorkersGroupConfig
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -15,8 +15,8 @@ def create(name: str = typer.Option(..., prompt=True),
     cluster_config = ClusterConfig(name,
                                    ns,
                                    head=HeadConfig(instance_type=head_instance_type),
-                                   workers=[WorkerConfig(instance_type=default_workers_instance_type,
-                                                         count=default_workers_count)])
+                                   worker_groups=[WorkersGroupConfig(instance_type=default_workers_instance_type,
+                                                                     count=default_workers_count)])
     manager = ClusterManager(cluster_config)
     manager.create_cluster()
 
@@ -25,10 +25,16 @@ def create(name: str = typer.Option(..., prompt=True),
 
 @app.command(no_args_is_help=True)
 def stop(name: str = typer.Option(..., prompt=True),
-         ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
-         stop_head: bool = typer.Option(False)):
+         ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
     manager = ClusterManager.load(name, ns)
-    manager.stop_cluster(stop_head)
+    manager.stop_cluster(stop_head=False)
+
+
+@app.command(no_args_is_help=True)
+def terminate(name: str = typer.Option(..., prompt=True),
+              ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
+    manager = ClusterManager.load(name, ns)
+    manager.stop_cluster(stop_head=True)
 
 
 @app.command(no_args_is_help=True)

@@ -1,39 +1,101 @@
 import typer
 
+from blazectl.cluster.cluster import ClusterManager, WorkersGroupConfig
+
 app = typer.Typer(no_args_is_help=True)
 
 
 @app.command(no_args_is_help=True)
 def add(name: str = typer.Option(..., prompt=True),
         cluster_name: str = typer.Option(..., "--cluster", "-c", prompt=True),
-        namespace: str = typer.Option(..., "--namespace", "-n", prompt=True),
+        cluster_ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
         instance_type: str = typer.Option(..., prompt=True),
         count: int = typer.Option(0),
         gpu: bool = typer.Option(False)):
-    pass
+    cluster_manager = ClusterManager.load(cluster_name, cluster_ns)
+
+    # worker may already be there - check for it
+    for worker in cluster_manager.cluster_config.worker_groups:
+        if worker.name == name:
+            raise ValueError(f"Duplicate workers-group is not allowed: {name}")
+
+    workers_group = WorkersGroupConfig(name=name, instance_type=instance_type, count=count, gpu=gpu)
+    cluster_manager.cluster_config.worker_groups.append(workers_group)
+
+    cluster_manager.create_cluster()
+    cluster_manager.save_config()
 
 
 @app.command(no_args_is_help=True)
 def update(name: str = typer.Option(..., prompt=True),
            cluster_name: str = typer.Option(..., "--cluster", "-c", prompt=True),
-           namespace: str = typer.Option(..., "--namespace", "-n", prompt=True),
+           cluster_ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
            instance_type: str = typer.Option(None, prompt=True),
            count: int = typer.Option(None),
            gpu: bool = typer.Option(None)):
-    pass
+    cluster_manager = ClusterManager.load(cluster_name, cluster_ns)
+
+    # worker may not be there - check for it
+    found = None
+    for worker in cluster_manager.cluster_config.worker_groups:
+        if worker.name == name:
+            found = worker
+
+    if found is None:
+        raise ValueError(f"Can not find workers-group={name}")
+
+    # if instance type or gpu support is changed - then stop cluster and then start
+    if found.instance_type != instance_type or found.gpu != gpu:
+        cluster_manager.stop_cluster()
+
+    found.instance_type = instance_type
+    found.gpu = gpu
+    found.count = count
+
+    cluster_manager.create_cluster()
+    cluster_manager.save_config()
 
 
 @app.command(no_args_is_help=True)
 def delete(name: str = typer.Option(..., prompt=True),
            cluster_name: str = typer.Option(..., "--cluster", "-c", prompt=True),
-           namespace: str = typer.Option(..., "--namespace", "-n", prompt=True)):
-    # deleting default means setting their count as zero
-    pass
+           cluster_ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
+    if name == "default":
+        # worker may be default - which is not allowed
+        raise ValueError(f"Deleting `default' workers-group is not allowed")
+
+    cluster_manager = ClusterManager.load(cluster_name, cluster_ns)
+
+    # worker may not be there - check for it
+    found = -1
+    for index, worker in enumerate(cluster_manager.cluster_config.worker_groups):
+        if worker.name == name:
+            found = index
+
+    if found == -1:
+        raise ValueError(f"Can not find workers-group={name}")
+
+    del cluster_manager.cluster_config.worker_groups[found]
+
+    cluster_manager.create_cluster()
+    cluster_manager.save_config()
 
 
 @app.command(no_args_is_help=True)
 def set_replicas(name: str = typer.Option(..., prompt=True),
                  cluster_name: str = typer.Option(..., "--cluster", "-c", prompt=True),
-                 namespace: str = typer.Option(..., "--namespace", "-n", prompt=True),
+                 cluster_ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
                  count: int = typer.Option(..., prompt=True)):
-    pass
+    cluster_manager = ClusterManager.load(cluster_name, cluster_ns)
+
+    found = None
+    for worker in cluster_manager.cluster_config.worker_groups:
+        if worker.name == name:
+            found = worker
+
+    if found is None:
+        raise ValueError(f"Can not find workers-group={name}")
+
+    found.count = count
+    cluster_manager.create_cluster()
+    cluster_manager.save_config()

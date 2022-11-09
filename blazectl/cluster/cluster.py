@@ -31,10 +31,11 @@ class HeadConfig:
 
 
 @dataclass
-class WorkerConfig:
+class WorkersGroupConfig:
     instance_type: str
     name: str = "default"
     count: int = 0
+    gpu: bool = False
 
 
 @dataclass
@@ -42,7 +43,7 @@ class ClusterConfig:
     name: str
     ns: str
     head: HeadConfig
-    workers: list[WorkerConfig]
+    worker_groups: list[WorkersGroupConfig]
     autoscaler: AutoscalerSpec = AutoscalerSpec()
     spec: ClusterSpec = ClusterSpec()
     __deleted__: bool = False
@@ -64,9 +65,9 @@ class ClusterManager:
         if stop_head:
             Utils.kubectl_delete(self.get_kubectl_config())
         else:
-            # we only remove workers by setting their count to zero
+            # we only remove worker_groups by setting their count to zero
             cluster_config = deepcopy(self.cluster_config)
-            for worker in cluster_config.workers:
+            for worker in cluster_config.worker_groups:
                 worker.count = 0
 
             temp_cluster_mgr = ClusterManager(cluster_config)
@@ -84,7 +85,7 @@ class ClusterManager:
 
     @staticmethod
     def config_name(name: str, ns: str):
-        return f"cluster/{ns}/{name}"
+        return f"cluster~{ns}~{name}"
 
     def save_config(self):
         Utils.save_config(ClusterManager.config_name(self.cluster_config.name, self.ns.name),
@@ -200,11 +201,11 @@ class ClusterManager:
                     }
                 },
                 "workerGroupSpecs": [self.get_worker_config(worker_config)
-                                     for worker_config in self.cluster_config.workers]
+                                     for worker_config in self.cluster_config.worker_groups]
             }
         }
 
-    def get_worker_config(self, worker_config: WorkerConfig):
+    def get_worker_config(self, worker_config: WorkersGroupConfig):
         return {
             "groupName": worker_config.name,
             "replicas": worker_config.count,
@@ -253,7 +254,7 @@ class ClusterManager:
                                     }
                                 }
                             },
-                            "resources": self.get_resource_limits(worker_config.instance_type),
+                            "resources": self.get_resource_limits(worker_config.instance_type, worker_config.gpu),
                             "volumeMounts": self.get_volume_mounts()
                         },
                         {
@@ -318,15 +319,21 @@ class ClusterManager:
 
         return mounts
 
-    # TODO: support gpu workers
-    def get_resource_limits(self, instance_type: str):
+    def get_resource_limits(self, instance_type: str, gpu: bool = False):
         data = self.instance_types_map.get(instance_type)
         if data is None:
             raise ValueError(f"Invalid instance type: {instance_type}")
 
+        if gpu and data.get("nvidia.com/gpu") is None:
+            raise ValueError(f"Invalid instance type: {instance_type} - not a gpu instance")
+
+        if not gpu and data.get("nvidia.com/gpu") is not None:
+            raise ValueError(f"Invalid instance type: {instance_type} - a gpu instance but gpu support is not needed")
+
         cpu = data.get("cpu")
         memory = data.get("memory")
-        return {
+
+        config = {
             "limits": {
                 "cpu": cpu,
                 "memory": memory
@@ -336,3 +343,9 @@ class ClusterManager:
                 "memory": memory
             }
         }
+
+        if gpu:
+            config["limits"]["nvidia.com/gpu"] = data.get("nvidia.com/gpu")
+            config["requests"]["nvidia.com/gpu"] = data.get("nvidia.com/gpu")
+
+        return config
