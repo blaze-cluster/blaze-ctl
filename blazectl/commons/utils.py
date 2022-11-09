@@ -23,6 +23,9 @@ class Utils:
                                    stdout=subprocess.PIPE,
                                    shell=True)
         out, err = kubectl.communicate(spec.encode('utf-8'))
+        while kubectl.returncode is None:
+            kubectl.poll()
+
         if out:
             print("Output:")
             print(out)
