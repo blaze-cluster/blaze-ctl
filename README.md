@@ -21,65 +21,9 @@ Each namespace has two group of users -
 * `blaze-user`: they can create / delete cluster and see pod and svc status
 * `blaze-admin`: they can additionally manage FSX Volumes, service accounts, gpu support
 
-## Commands
+## [Commands](docs/commands.md)
 
-### Namespace
-
-#### Create Namespace
-
-```
-blazectl namespace create
-```
-
-#### Delete Namespace
-
-```
-blazectl namespace delete
-```
-
-#### Add blaze-user
-
-```
-blazectl user blaze-user add
-```
-
-#### Delete blaze-user
-
-```
-blazectl user blaze-user delete
-```
-
-#### Add blaze-admin
-
-```
-blazectl user blaze-admin add
-```
-
-#### Delete blaze-admin
-
-```
-blazectl user blaze-admin delete
-```
-
-### Cluster
-
-#### Create
-
-```
-blazectl cluster create
-```
-
-#### Delete
-
-```
-blazectl cluster delete
-```
-
-#### Restart
-
-```
-blazectl cluster restart
-```
+[Link](docs/commands.md)
 
 ## Prerequisites
 

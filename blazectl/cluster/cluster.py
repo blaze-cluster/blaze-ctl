@@ -69,12 +69,12 @@ class ClusterManager:
     def start_cluster(self):
         Utils.kubectl_apply(self.get_kubectl_config())
 
-        self.watch_cluster_state(head_node_state=WatchState.RUNNING, workers_node_state=WatchState.RUNNING)
+        self.watch_cluster_state({"head": WatchState.RUNNING, "worker": WatchState.RUNNING})
 
     def terminate_cluster(self):
         Utils.kubectl_delete(self.get_kubectl_config())
 
-        self.watch_cluster_state(head_node_state=WatchState.DELETED, workers_node_state=WatchState.DELETED)
+        self.watch_cluster_state({"head": WatchState.DELETED, "worker": WatchState.DELETED})
 
     def stop_cluster(self):
         # we only remove worker_groups by setting their count to zero
@@ -85,19 +85,19 @@ class ClusterManager:
         temp_cluster_mgr = ClusterManager(cluster_config)
         Utils.kubectl_apply(temp_cluster_mgr.get_kubectl_config())
 
-        self.watch_cluster_state(head_node_state=WatchState.RUNNING, workers_node_state=WatchState.DELETED)
+        self.watch_cluster_state({"head": WatchState.RUNNING, "worker": WatchState.DELETED})
 
     def watch_cluster_state(self,
-                            head_node_state: WatchState,
-                            workers_node_state: WatchState):
+                            end_states: dict[str, WatchState]):
         label_selector = f"ray.io/cluster={self.cluster_config.name}"
 
         # build list of pods to watch for
         # maintain a counter of how many have reached the stage
-        total_head = 0
         total_workers = 0
         for worker in self.cluster_config.worker_groups:
             total_workers += worker.count
+
+        end_counts = {"head": 1, "worker": total_workers}
 
         # state wise - count
         state_summary = {}
@@ -105,8 +105,7 @@ class ClusterManager:
         # per pod - current state
         pods_state = {}
 
-        workers_in_final_state = 0
-        head_in_final_state = 0
+        current_counts = {"head": 0, "worker": 0}
 
         watch = kube_watch.Watch()
         kube_config.load_kube_config()
@@ -116,26 +115,39 @@ class ClusterManager:
                                   label_selector=label_selector,
                                   timeout_seconds=0):
             event_object = event["object"]
-            print(f"=====> Event Type={event['type']} "
-                  f"Object Type={event_object.kind} "
-                  f"Pod Name={event_object.metadata.name} "
-                  f"Phase={event_object.status.phase} "
-                  f"Pod Type={event_object.metadata.labels['ray.io/node-type']}")
-            print(f"Detailed Status: ", event_object.status)
+            event_type = event['type']
+            object_type = event_object.kind
+            pod_name = event_object.metadata.name
+            pod_phase = event_object.status.phase
+            pod_type = event_object.metadata.labels['ray.io/node-type']
 
-            # if watch_state == WatchState.RUNNING and event["object"].status.phase == "Running":
-            #     watch.stop()
-            #     end_time = time.time()
-            #     logger.info("%s started in %0.2f sec", full_name, end_time - start_time)
-            #     return
-            # # event.type: ADDED, MODIFIED, DELETED
-            # if watch_state == WatchState.DELETED and event["type"] == "DELETED":
-            #     # Pod was deleted while we were waiting for it to start.
-            #     logger.debug("%s deleted before it started", full_name)
-            #     watch.stop()
-            #     return
-            #
-            # # TODO: if we reach goal - watch.stop() and return
+            if object_type != "Pod":
+                continue
+
+            print(f"=====> Event Type={event_type} "
+                  f"Pod Type={pod_type} "
+                  f"Pod Name={pod_name} "
+                  f"Phase={pod_phase}")
+
+            # print(f"Detailed Status: ", event_object.status)
+
+            pod_end_state = end_states[pod_type]
+
+            if pod_end_state == WatchState.DELETED and event_type == "DELETED" or pod_end_state == WatchState.RUNNING and pod_phase == "Running":
+                current_counts[pod_type] += 1
+
+            end_state_reached = True
+            for pt in ["head", "worker"]:
+                if current_counts[pt] != end_counts[pt]:
+                    end_state_reached = False
+
+            # print("Current counts: ", current_counts)
+            # print("End counts: ", end_counts)
+            # print("End state: ", end_state_reached)
+
+            if end_state_reached:
+                watch.stop()
+                return
 
     def delete_cluster(self):
         self.terminate_cluster()
