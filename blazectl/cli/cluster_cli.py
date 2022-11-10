@@ -21,9 +21,7 @@ def create(name: str = typer.Option(..., prompt=True),
                                                                      count=default_workers_count,
                                                                      gpu=default_workers_gpu)])
     manager = ClusterManager(cluster_config)
-    manager.start_cluster()
-
-    manager.save_config()
+    manager.start_cluster(save_config=True)
 
 
 @app.command(no_args_is_help=True)

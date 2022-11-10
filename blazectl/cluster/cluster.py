@@ -66,8 +66,11 @@ class ClusterManager:
         with open(f"{os.path.realpath(os.path.dirname(__file__))}/aws_instance_types.json") as file:
             self.instance_types_map = json.load(file)
 
-    def start_cluster(self):
+    def start_cluster(self, save_config=False):
         Utils.kubectl_apply(self.get_kubectl_config())
+
+        if save_config:
+            self.save_config()
 
         self.watch_cluster_state({"head": WatchState.RUNNING, "worker": WatchState.RUNNING})
 
@@ -270,13 +273,16 @@ class ClusterManager:
         }
 
     def get_worker_config(self, worker_config: WorkersGroupConfig):
+        resources = self.get_resource_limits(worker_config.instance_type, worker_config.gpu)
+
         return {
             "groupName": worker_config.name,
             "replicas": worker_config.count,
             "minReplicas": worker_config.count,
             "maxReplicas": worker_config.count * 10,
             "rayStartParams": {
-                "block": "true"
+                "block": "true",
+                "num-gpus": "0" if not worker_config.gpu else resources["limits"]["nvidia.com/gpu"]
             },
             "template": {
                 "spec": {
@@ -318,7 +324,7 @@ class ClusterManager:
                                     }
                                 }
                             },
-                            "resources": self.get_resource_limits(worker_config.instance_type, worker_config.gpu),
+                            "resources": resources,
                             "volumeMounts": self.get_volume_mounts()
                         },
                         {

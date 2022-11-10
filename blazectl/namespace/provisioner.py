@@ -32,7 +32,7 @@ class ProvisionerManager:
 
     def get_kubectl_config(self, kind: ProvisionerKind):
         allowed_instance_families = ALLOWED_INSTANCE_FAMILIES
-        if self.namespace_config.gpu_enabled:
+        if self.namespace_config.gpu_enabled and kind == ProvisionerKind.WORKER:
             allowed_instance_families = allowed_instance_families + GPU_INSTANCE_FAMILIES
 
         return [
