@@ -33,16 +33,17 @@ class JobManager:
 
     def get_job_client(self):
         svc_addr = JobManager.get_svc_addr(self.cluster_ns, self.cluster_name)
-        return svc_addr, JobSubmissionClient(f"http://{svc_addr}:8265")
+        svc_addr = f"http://{svc_addr}:8265"
+        return svc_addr, JobSubmissionClient(svc_addr)
 
     def run_job(self,
                 entrypoint: str,
                 working_dir: str = "./",
                 pip: list[str] = None,
-                conda: list[str] = None,
-                on_job_run: ClusterStateOnJobRun = ClusterStateOnJobRun.TERMINATE_THEN_START,
-                on_job_success: ClusterStateOnJobEnd = ClusterStateOnJobEnd.STOP,
-                on_job_failure: ClusterStateOnJobEnd = ClusterStateOnJobEnd.STOP):
+                # conda: list[str] = None,
+                on_job_run: ClusterStateOnJobRun = ClusterStateOnJobRun.NOTHING,
+                on_job_success: ClusterStateOnJobEnd = ClusterStateOnJobEnd.NOTHING,
+                on_job_failure: ClusterStateOnJobEnd = ClusterStateOnJobEnd.NOTHING):
 
         self.set_cluster_state_on_job_run(on_job_run)
 
@@ -52,10 +53,10 @@ class JobManager:
             runtime_env={
                 "working_dir": working_dir,
                 "pip": pip,
-                "conda": conda
+                # "conda": conda
             }
         )
-        print("JOB_ID:", job_id)
+        print(f"JOB_ID:{job_id} is submitted on {svc_addr}")
 
         # open dashboard in new tab
         webbrowser.open(svc_addr, new=2)
@@ -66,9 +67,9 @@ class JobManager:
 
     def stop_job(self,
                  job_id,
-                 on_job_stop: ClusterStateOnJobEnd = ClusterStateOnJobEnd.STOP,
-                 on_job_failure: ClusterStateOnJobEnd = ClusterStateOnJobEnd.STOP):
-        job_client = self.get_job_client()
+                 on_job_stop: ClusterStateOnJobEnd = ClusterStateOnJobEnd.NOTHING,
+                 on_job_failure: ClusterStateOnJobEnd = ClusterStateOnJobEnd.NOTHING):
+        svc_addr, job_client = self.get_job_client()
         status = job_client.stop_job(job_id=job_id)
         print(f"Stopped job={job_id} with status={status}")
 
@@ -80,12 +81,12 @@ class JobManager:
         asyncio.run(self._tail_job_logs(job_id))
 
     async def _tail_job_logs(self, job_id):
-        job_client = self.get_job_client()
+        svc_addr, job_client = self.get_job_client()
         async for lines in job_client.tail_job_logs(job_id):
             print(lines, end="")
 
     def job_logs(self, job_id):
-        job_client = self.get_job_client()
+        svc_addr, job_client = self.get_job_client()
         logs = job_client.get_job_logs(job_id)
         print(logs)
 
@@ -94,7 +95,7 @@ class JobManager:
                            timeout_seconds=3600 * 24,  # wait for 24 hours
                            on_job_success: ClusterStateOnJobEnd = ClusterStateOnJobEnd.STOP,
                            on_job_failure: ClusterStateOnJobEnd = ClusterStateOnJobEnd.STOP):
-        job_client = self.get_job_client()
+        svc_addr, job_client = self.get_job_client()
         start = time.time()
         while time.time() - start <= timeout_seconds:
             status = job_client.get_job_status(job_id)
@@ -130,7 +131,7 @@ class JobManager:
             cluster_manager.terminate_cluster()
 
     def job_status(self, job_id):
-        job_client = self.get_job_client()
+        svc_addr, job_client = self.get_job_client()
         status = job_client.get_job_status(job_id)
         print(f"{job_id} is {status}")
 
@@ -147,7 +148,7 @@ class JobManager:
         while not dns_resolved:
             try:
                 answers = dns.resolver.resolve(svc_addr, 'A')
-                print(f"Answers for {svc_addr} = ", answers)
+                # print(f"Answers for {svc_addr} = ", answers)
                 dns_resolved = True
             except dns.resolver.NoAnswer:
                 time.sleep(2)

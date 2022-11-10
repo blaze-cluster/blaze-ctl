@@ -13,16 +13,16 @@ def run(cluster_name: str = typer.Option(..., "--cluster-name", "-c", prompt=Tru
         entrypoint: str = typer.Option(..., "--entrypoint", "-e", prompt=True),
         working_dir: str = typer.Option("./"),
         pip: Optional[list[str]] = typer.Option(None),
-        conda: Optional[list[str]] = typer.Option(None),
-        on_job_run: ClusterStateOnJobRun = typer.Option(ClusterStateOnJobRun.TERMINATE_THEN_START, case_sensitive=False),
-        on_job_success: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.STOP, case_sensitive=False),
-        on_job_failure: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.STOP, case_sensitive=False)
+        # conda: Optional[list[str]] = typer.Option(None),
+        on_job_run: ClusterStateOnJobRun = typer.Option(ClusterStateOnJobRun.NOTHING, case_sensitive=False),
+        on_job_success: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.NOTHING, case_sensitive=False),
+        on_job_failure: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.NOTHING, case_sensitive=False)
         ):
     job_manager = JobManager(cluster_name, cluster_ns)
     job_manager.run_job(entrypoint=entrypoint,
                         working_dir=working_dir,
                         pip=pip,
-                        conda=conda,
+                        # conda=conda,
                         on_job_run=on_job_run,
                         on_job_success=on_job_success,
                         on_job_failure=on_job_failure)
@@ -32,8 +32,8 @@ def run(cluster_name: str = typer.Option(..., "--cluster-name", "-c", prompt=Tru
 def stop(cluster_name: str = typer.Option(..., "--cluster-name", "-c", prompt=True),
          cluster_ns: str = typer.Option(..., "--cluster-ns", "-n", prompt=True),
          job_id: str = typer.Option(..., "--job-id", "-j", prompt=True),
-         on_job_stop: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.STOP, case_sensitive=False),
-         on_job_failure: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.STOP, case_sensitive=False)
+         on_job_stop: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.NOTHING, case_sensitive=False),
+         on_job_failure: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.NOTHING, case_sensitive=False)
          ):
     job_manager = JobManager(cluster_name, cluster_ns)
     job_manager.stop_job(job_id,
@@ -46,8 +46,8 @@ def wait_until_job_end(cluster_name: str = typer.Option(..., "--cluster-name", "
                        cluster_ns: str = typer.Option(..., "--cluster-ns", "-n", prompt=True),
                        job_id: str = typer.Option(..., "--job-id", "-j", prompt=True),
                        timeout_seconds=typer.Option(3600 * 24),  # wait for 24 hours
-                       on_job_success: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.STOP, case_sensitive=False),
-                       on_job_failure: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.STOP, case_sensitive=False)
+                       on_job_success: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.NOTHING, case_sensitive=False),
+                       on_job_failure: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.NOTHING, case_sensitive=False)
                        ):
     job_manager = JobManager(cluster_name, cluster_ns)
     job_manager.wait_until_job_end(job_id,
@@ -72,6 +72,7 @@ def tail_logs(cluster_name: str = typer.Option(..., "--cluster-name", "-c", prom
     job_manager.tail_job_logs(job_id)
 
 
+@app.command(no_args_is_help=True)
 def download_logs(cluster_name: str = typer.Option(..., "--cluster-name", "-c", prompt=True),
                   cluster_ns: str = typer.Option(..., "--cluster-ns", "-n", prompt=True),
                   job_id: str = typer.Option(..., "--job-id", "-j", prompt=True)):
