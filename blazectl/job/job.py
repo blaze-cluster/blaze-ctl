@@ -1,7 +1,9 @@
 import asyncio
 import enum
 import time
+import webbrowser
 
+import dns.resolver
 from kubernetes import client as kube_client, config as kube_config
 from ray.dashboard.modules.job.common import JobStatus
 from ray.job_submission import JobSubmissionClient
@@ -9,13 +11,13 @@ from ray.job_submission import JobSubmissionClient
 from blazectl.cluster.cluster import ClusterManager
 
 
-class ClusterStateOnJobRun(enum.Enum):
+class ClusterStateOnJobRun(str, enum.Enum):
     STOP_THEN_START = "stop-and-start"
     TERMINATE_THEN_START = "terminate-then-start"
     NOTHING = "nothing"
 
 
-class ClusterStateOnJobEnd(enum.Enum):
+class ClusterStateOnJobEnd(str, enum.Enum):
     STOP = "stop"
     TERMINATE = "terminate"
     NOTHING = "nothing"
@@ -30,8 +32,8 @@ class JobManager:
         self.cluster_ns = cluster_ns
 
     def get_job_client(self):
-        ray_svc = JobManager.get_ray_svc(self.cluster_ns, self.cluster_name)
-        return JobSubmissionClient(f"http://{ray_svc}:8265")
+        svc_addr = JobManager.get_svc_addr(self.cluster_ns, self.cluster_name)
+        return svc_addr, JobSubmissionClient(f"http://{svc_addr}:8265")
 
     def run_job(self,
                 entrypoint: str,
@@ -44,7 +46,7 @@ class JobManager:
 
         self.set_cluster_state_on_job_run(on_job_run)
 
-        job_client = self.get_job_client()
+        svc_addr, job_client = self.get_job_client()
         job_id = job_client.submit_job(
             entrypoint=entrypoint,
             runtime_env={
@@ -54,6 +56,9 @@ class JobManager:
             }
         )
         print("JOB_ID:", job_id)
+
+        # open dashboard in new tab
+        webbrowser.open(svc_addr, new=2)
 
         self.wait_until_job_end(job_id,
                                 on_job_success=on_job_success,
@@ -130,9 +135,21 @@ class JobManager:
         print(f"{job_id} is {status}")
 
     @staticmethod
-    def get_ray_svc(ray_cluster_name: str, ray_cluster_ns: str):
+    def get_svc_addr(cluster_ns: str, cluster_name: str):
         kube_config.load_kube_config()
         v1_api = kube_client.CoreV1Api()
-        result = v1_api.read_namespaced_service(name=f"{ray_cluster_name}-head-svc", namespace=ray_cluster_ns)
+        result = v1_api.read_namespaced_service(name=f"{cluster_name}-head-svc", namespace=cluster_ns)
 
-        return result.status.load_balancer.ingress[0].hostname
+        svc_addr = result.status.load_balancer.ingress[0].hostname
+
+        # we will try resolve svc addr and wait till it is resolved
+        dns_resolved = False
+        while not dns_resolved:
+            try:
+                answers = dns.resolver.resolve(svc_addr, 'A')
+                print(f"Answers for {svc_addr} = ", answers)
+                dns_resolved = True
+            except dns.resolver.NoAnswer:
+                time.sleep(2)
+
+        return svc_addr

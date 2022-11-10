@@ -52,7 +52,7 @@ class ClusterConfig:
     __deleted__: bool = False
 
 
-class WatchState(enum.Enum):
+class WatchState(str, enum.Enum):
     RUNNING = "running"
     DELETED = "deleted"
 

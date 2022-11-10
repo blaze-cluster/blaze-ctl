@@ -3,7 +3,7 @@ from dataclasses import dataclass, field
 from typing import Optional
 
 
-class ProvisionerKind(enum.Enum):
+class ProvisionerKind(str, enum.Enum):
     WORKER = "worker"
     HEAD = "head"
 
