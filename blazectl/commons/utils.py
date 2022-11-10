@@ -2,12 +2,8 @@ import json
 import os
 import subprocess
 from typing import Dict
+from pathlib import Path
 
-
-# envsubst < ~/icloud/ws/cluster_config/eks/ray/cluster/ray_cluster_latest.yaml | kubectl apply -f -
-#
-# print(subprocess.check_output(['ls', '-l']))
-# output = subprocess.check_output("eksctl create -f managedcluster.yaml", shell=True)
 
 # TODO: support dry-run
 class Utils:
@@ -40,20 +36,27 @@ class Utils:
         print(output.decode('utf-8').rstrip())
 
     @staticmethod
+    def config_path(path):
+        config_dir = Path.home() / ".blazectl"
+        os.makedirs(config_dir, exist_ok=True)
+
+        config_path = config_dir / f"{path}.json"
+
+        return config_path
+
+    @staticmethod
     def save_config(path: str, data: Dict):
         json_object = json.dumps(data, indent=2)
-
-        # Writing to sample.json
-        with open(f"{path}.json", "w") as outfile:
+        with open(Utils.config_path(path), "w") as outfile:
             outfile.write(json_object)
 
     @staticmethod
     def delete_config(path: str):
-        os.remove(f"{path}.json")
+        os.remove(Utils.config_path(path))
 
     @staticmethod
     def load_config(path: str) -> Dict:
-        with open(f'{path}.json', 'r') as openfile:
+        with open(Utils.config_path(path), 'r') as openfile:
             # Reading from json file
             json_object = json.load(openfile)
             return json_object

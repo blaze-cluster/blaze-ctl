@@ -1,13 +1,13 @@
 [tool.poetry]
 name = "blazectl"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Shailendra Sharma <shailendra.sharma@gmail.com>"]
 readme = "README.md"
 packages = [{ include = "blazectl" }]
 
 [tool.poetry.scripts]
-blazectl = "blazectl.cli:app"
+blazectl = "blazectl.cli.main_cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.9"

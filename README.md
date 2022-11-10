@@ -25,13 +25,6 @@ Each namespace has two group of users -
 
 [Link](docs/commands.md)
 
-## Prerequisites
-
-### On MacOS
-
-```
-brew install pipx
-pipx ensurepath
-```
-
 ## Install
+
+`pip install blazectl`
