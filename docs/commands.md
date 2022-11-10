@@ -143,11 +143,27 @@ $ blazectl job [OPTIONS] COMMAND [ARGS]...
 
 **Commands**:
 
+* `download-logs`
 * `run`
 * `status`
 * `stop`
 * `tail-logs`
 * `wait-until-job-end`
+
+### `blazectl job download-logs`
+
+**Usage**:
+
+```console
+$ blazectl job download-logs [OPTIONS]
+```
+
+**Options**:
+
+* `-c, --cluster-name TEXT`: [required]
+* `-n, --cluster-ns TEXT`: [required]
+* `-j, --job-id TEXT`: [required]
+* `--help`: Show this message and exit.
 
 ### `blazectl job run`
 
@@ -164,10 +180,9 @@ $ blazectl job run [OPTIONS]
 * `-e, --entrypoint TEXT`: [required]
 * `--working-dir TEXT`: [default: ./]
 * `--pip TEXT`
-* `--conda TEXT`
-* `--on-job-run [stop-and-start|terminate-then-start|nothing]`: [default: ClusterStateOnJobRun.TERMINATE_THEN_START]
-* `--on-job-success [stop|terminate|nothing]`: [default: ClusterStateOnJobEnd.STOP]
-* `--on-job-failure [stop|terminate|nothing]`: [default: ClusterStateOnJobEnd.STOP]
+* `--on-job-run [stop-and-start|terminate-then-start|nothing]`: [default: ClusterStateOnJobRun.NOTHING]
+* `--on-job-success [stop|terminate|nothing]`: [default: ClusterStateOnJobEnd.NOTHING]
+* `--on-job-failure [stop|terminate|nothing]`: [default: ClusterStateOnJobEnd.NOTHING]
 * `--help`: Show this message and exit.
 
 ### `blazectl job status`
@@ -198,8 +213,8 @@ $ blazectl job stop [OPTIONS]
 * `-c, --cluster-name TEXT`: [required]
 * `-n, --cluster-ns TEXT`: [required]
 * `-j, --job-id TEXT`: [required]
-* `--on-job-stop [stop|terminate|nothing]`: [default: ClusterStateOnJobEnd.STOP]
-* `--on-job-failure [stop|terminate|nothing]`: [default: ClusterStateOnJobEnd.STOP]
+* `--on-job-stop [stop|terminate|nothing]`: [default: ClusterStateOnJobEnd.NOTHING]
+* `--on-job-failure [stop|terminate|nothing]`: [default: ClusterStateOnJobEnd.NOTHING]
 * `--help`: Show this message and exit.
 
 ### `blazectl job tail-logs`
@@ -231,8 +246,8 @@ $ blazectl job wait-until-job-end [OPTIONS]
 * `-n, --cluster-ns TEXT`: [required]
 * `-j, --job-id TEXT`: [required]
 * `--timeout-seconds TEXT`: [default: 86400]
-* `--on-job-success [stop|terminate|nothing]`: [default: ClusterStateOnJobEnd.STOP]
-* `--on-job-failure [stop|terminate|nothing]`: [default: ClusterStateOnJobEnd.STOP]
+* `--on-job-success [stop|terminate|nothing]`: [default: ClusterStateOnJobEnd.NOTHING]
+* `--on-job-failure [stop|terminate|nothing]`: [default: ClusterStateOnJobEnd.NOTHING]
 * `--help`: Show this message and exit.
 
 ## `blazectl namespace`
