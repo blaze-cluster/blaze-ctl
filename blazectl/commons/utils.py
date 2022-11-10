@@ -30,6 +30,10 @@ class Utils:
         while kubectl.returncode is None:
             kubectl.poll()
 
+        if kubectl.returncode != 0:
+            print("Input:")
+            print(json.dumps(data, indent=2))
+
     @staticmethod
     def run_command(command):
         output = subprocess.check_output(command, shell=True)
@@ -37,7 +41,7 @@ class Utils:
 
     @staticmethod
     def save_config(path: str, data: Dict):
-        json_object = json.dumps(data, indent=4)
+        json_object = json.dumps(data, indent=2)
 
         # Writing to sample.json
         with open(f"{path}.json", "w") as outfile:

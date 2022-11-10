@@ -122,7 +122,7 @@ class JobManager:
         if cluster_state == ClusterStateOnJobEnd.STOP:
             cluster_manager.stop_cluster()
         elif cluster_state == ClusterStateOnJobEnd.TERMINATE:
-            cluster_manager.stop_cluster(stop_head=True)
+            cluster_manager.terminate_cluster()
 
     def job_status(self, job_id):
         job_client = self.get_job_client()

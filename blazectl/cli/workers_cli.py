@@ -17,12 +17,13 @@ def add(name: str = typer.Option(..., prompt=True),
     # worker may already be there - check for it
     for worker in cluster_manager.cluster_config.worker_groups:
         if worker.name == name:
-            raise ValueError(f"Duplicate workers-group is not allowed: {name}")
+            print(f"Duplicate workers-group is not allowed: {name}")
+            raise typer.Abort()
 
     workers_group = WorkersGroupConfig(name=name, instance_type=instance_type, count=count, gpu=gpu)
     cluster_manager.cluster_config.worker_groups.append(workers_group)
 
-    cluster_manager.create_cluster()
+    cluster_manager.start_cluster()
     cluster_manager.save_config()
 
 
@@ -42,7 +43,8 @@ def update(name: str = typer.Option(..., prompt=True),
             found = worker
 
     if found is None:
-        raise ValueError(f"Can not find workers-group={name}")
+        print(f"Can not find workers-group={name}")
+        raise typer.Abort()
 
     # if instance type or gpu support is changed - then stop cluster and then start
     if found.instance_type != instance_type or found.gpu != gpu:
@@ -52,7 +54,7 @@ def update(name: str = typer.Option(..., prompt=True),
     found.gpu = gpu
     found.count = count
 
-    cluster_manager.create_cluster()
+    cluster_manager.start_cluster()
     cluster_manager.save_config()
 
 
@@ -62,7 +64,8 @@ def delete(name: str = typer.Option(..., prompt=True),
            cluster_ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
     if name == "default":
         # worker may be default - which is not allowed
-        raise ValueError(f"Deleting `default' workers-group is not allowed")
+        print(f"Deleting `default' workers-group is not allowed")
+        raise typer.Abort()
 
     cluster_manager = ClusterManager.load(cluster_name, cluster_ns)
 
@@ -73,11 +76,12 @@ def delete(name: str = typer.Option(..., prompt=True),
             found = index
 
     if found == -1:
-        raise ValueError(f"Can not find workers-group={name}")
+        print(f"Can not find workers-group={name}")
+        raise typer.Abort()
 
     del cluster_manager.cluster_config.worker_groups[found]
 
-    cluster_manager.create_cluster()
+    cluster_manager.restart_cluster(restart_head=True)
     cluster_manager.save_config()
 
 
@@ -97,5 +101,5 @@ def set_replicas(name: str = typer.Option(..., prompt=True),
         raise ValueError(f"Can not find workers-group={name}")
 
     found.count = count
-    cluster_manager.create_cluster()
+    cluster_manager.start_cluster()
     cluster_manager.save_config()

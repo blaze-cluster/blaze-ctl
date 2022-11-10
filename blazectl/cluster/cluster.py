@@ -1,11 +1,14 @@
 from __future__ import annotations
 
 import dataclasses
+import enum
 import json
+import os
 from copy import deepcopy
 from dataclasses import dataclass
 
 import dacite
+from kubernetes import client as kube_client, config as kube_config, watch as kube_watch
 
 from blazectl.commons.utils import Utils
 from blazectl.namespace.namespace import NamespaceManager
@@ -14,15 +17,15 @@ from blazectl.namespace.namespace import NamespaceManager
 @dataclass
 class ClusterSpec:
     ray_version: str = "2.0.0"
-    ray_image: str = "514352861371.dkr.ecr.ap-south-1.amazonaws.com/recsys/ray-ml:2.0.1"
+    ray_image: str = "514352861371.dkr.ecr.ap-south-1.amazonaws.com/recsys/ray-ml:2.0.0"
     busybox_image: str = "514352861371.dkr.ecr.ap-south-1.amazonaws.com/recsys/busybox:latest"
-    aws_cli_image: str = "514352861371.dkr.ecr.ap-south-1.amazonaws.com/recsys/aws-app:latest"
+    aws_cli_image: str = "514352861371.dkr.ecr.ap-south-1.amazonaws.com/recsys/aws-cli:latest"
 
 
-@dataclass
-class AutoscalerSpec:
-    enabled: bool = False,
-    idle_timeout_in_seconds: int = 300
+# @dataclass
+# class AutoscalerSpec:
+#     enabled: bool = False,
+#     idle_timeout_in_seconds: int = 300
 
 
 @dataclass
@@ -44,9 +47,14 @@ class ClusterConfig:
     ns: str
     head: HeadConfig
     worker_groups: list[WorkersGroupConfig]
-    autoscaler: AutoscalerSpec = AutoscalerSpec()
+    # autoscaler: AutoscalerSpec = AutoscalerSpec()
     spec: ClusterSpec = ClusterSpec()
     __deleted__: bool = False
+
+
+class WatchState(enum.Enum):
+    RUNNING = "running"
+    DELETED = "deleted"
 
 
 class ClusterManager:
@@ -55,30 +63,89 @@ class ClusterManager:
 
         self.ns = NamespaceManager.load_config(cluster_config.ns)
 
-        with open("aws_instance_types.json") as file:
+        with open(f"{os.path.realpath(os.path.dirname(__file__))}/aws_instance_types.json") as file:
             self.instance_types_map = json.load(file)
 
-    def create_cluster(self):
+    def start_cluster(self):
         Utils.kubectl_apply(self.get_kubectl_config())
 
-    def stop_cluster(self, stop_head: bool = False):
-        if stop_head:
-            Utils.kubectl_delete(self.get_kubectl_config())
-        else:
-            # we only remove worker_groups by setting their count to zero
-            cluster_config = deepcopy(self.cluster_config)
-            for worker in cluster_config.worker_groups:
-                worker.count = 0
+        self.watch_cluster_state(head_node_state=WatchState.RUNNING, workers_node_state=WatchState.RUNNING)
 
-            temp_cluster_mgr = ClusterManager(cluster_config)
-            Utils.kubectl_apply(temp_cluster_mgr.get_kubectl_config())
-
-    def delete_cluster(self):
+    def terminate_cluster(self):
         Utils.kubectl_delete(self.get_kubectl_config())
 
+        self.watch_cluster_state(head_node_state=WatchState.DELETED, workers_node_state=WatchState.DELETED)
+
+    def stop_cluster(self):
+        # we only remove worker_groups by setting their count to zero
+        cluster_config = deepcopy(self.cluster_config)
+        for worker in cluster_config.worker_groups:
+            worker.count = 0
+
+        temp_cluster_mgr = ClusterManager(cluster_config)
+        Utils.kubectl_apply(temp_cluster_mgr.get_kubectl_config())
+
+        self.watch_cluster_state(head_node_state=WatchState.RUNNING, workers_node_state=WatchState.DELETED)
+
+    def watch_cluster_state(self,
+                            head_node_state: WatchState,
+                            workers_node_state: WatchState):
+        label_selector = f"ray.io/cluster={self.cluster_config.name}"
+
+        # build list of pods to watch for
+        # maintain a counter of how many have reached the stage
+        total_head = 0
+        total_workers = 0
+        for worker in self.cluster_config.worker_groups:
+            total_workers += worker.count
+
+        # state wise - count
+        state_summary = {}
+
+        # per pod - current state
+        pods_state = {}
+
+        workers_in_final_state = 0
+        head_in_final_state = 0
+
+        watch = kube_watch.Watch()
+        kube_config.load_kube_config()
+        kube_api = kube_client.CoreV1Api()
+        for event in watch.stream(func=kube_api.list_namespaced_pod,
+                                  namespace=self.ns.name,
+                                  label_selector=label_selector,
+                                  timeout_seconds=0):
+            event_object = event["object"]
+            print(f"=====> Event Type={event['type']} "
+                  f"Object Type={event_object.kind} "
+                  f"Pod Name={event_object.metadata.name} "
+                  f"Phase={event_object.status.phase} "
+                  f"Pod Type={event_object.metadata.labels['ray.io/node-type']}")
+            print(f"Detailed Status: ", event_object.status)
+
+            # if watch_state == WatchState.RUNNING and event["object"].status.phase == "Running":
+            #     watch.stop()
+            #     end_time = time.time()
+            #     logger.info("%s started in %0.2f sec", full_name, end_time - start_time)
+            #     return
+            # # event.type: ADDED, MODIFIED, DELETED
+            # if watch_state == WatchState.DELETED and event["type"] == "DELETED":
+            #     # Pod was deleted while we were waiting for it to start.
+            #     logger.debug("%s deleted before it started", full_name)
+            #     watch.stop()
+            #     return
+            #
+            # # TODO: if we reach goal - watch.stop() and return
+
+    def delete_cluster(self):
+        self.terminate_cluster()
+
     def restart_cluster(self, restart_head: bool = False):
-        self.stop_cluster(stop_head=restart_head)
-        self.create_cluster()
+        if restart_head:
+            self.terminate_cluster()
+        else:
+            self.stop_cluster()
+        self.start_cluster()
 
     def config_as_dict(self):
         return dataclasses.asdict(self.cluster_config)
@@ -121,22 +188,7 @@ class ClusterManager:
             },
             "spec": {
                 "rayVersion": self.cluster_config.spec.ray_version,
-                "enableInTreeAutoscaling": self.cluster_config.autoscaler.enabled,
-                # "autoscalerOptions": {
-                #     "upscalingMode": "Default",
-                #     "idleTimeoutSeconds": cluster_config.autoscaler.idle_timeout_in_seconds,
-                #     "imagePullPolicy": "Always",
-                #     "resources": {
-                #         "limits": {
-                #             "cpu": "1",
-                #             "memory": "2Gi"
-                #         },
-                #         "requests": {
-                #             "cpu": "1",
-                #             "memory": "2Gi"
-                #         }
-                #     }
-                # },
+                "enableInTreeAutoscaling": False,
                 "headGroupSpec": {
                     "serviceType": "LoadBalancer",
                     "enableIngress": True,
@@ -150,8 +202,8 @@ class ClusterManager:
                             "serviceAccountName": self.get_service_account(),
                             "nodeSelector": {
                                 "node.kubernetes.io/instance-type": self.cluster_config.head.instance_type,
-                                "ray-cluster/namespace": self.ns.name,
-                                "ray-cluster/node-type": "head"
+                                "blaze-cluster/namespace": self.ns.name,
+                                "blaze-cluster/node-type": "head"
                             },
                             "containers": [
                                 {
@@ -219,8 +271,8 @@ class ClusterManager:
                     "serviceAccount": self.get_service_account(),
                     "nodeSelector": {
                         "node.kubernetes.io/instance-type": worker_config.instance_type,
-                        "ray-cluster/namespace": self.ns.name,
-                        "ray-cluster/node-type": "worker"
+                        "blaze-cluster/namespace": self.ns.name,
+                        "blaze-cluster/node-type": "worker"
                     },
                     "volumes": self.get_volumes(),
                     "initContainers": [
@@ -322,7 +374,7 @@ class ClusterManager:
     def get_resource_limits(self, instance_type: str, gpu: bool = False):
         data = self.instance_types_map.get(instance_type)
         if data is None:
-            raise ValueError(f"Invalid instance type: {instance_type}")
+            raise ValueError(f"Invalid instance type: {instance_type} - not found")
 
         if gpu and data.get("nvidia.com/gpu") is None:
             raise ValueError(f"Invalid instance type: {instance_type} - not a gpu instance")
@@ -330,7 +382,7 @@ class ClusterManager:
         if not gpu and data.get("nvidia.com/gpu") is not None:
             raise ValueError(f"Invalid instance type: {instance_type} - a gpu instance but gpu support is not needed")
 
-        cpu = data.get("cpu")
+        cpu = int(data.get("cpu").rstrip("m")) // 1024
         memory = data.get("memory")
 
         config = {

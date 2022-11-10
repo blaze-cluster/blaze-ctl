@@ -1,5 +1,3 @@
-from typing import Optional
-
 import typer
 
 from blazectl.cluster.cluster import ClusterManager, ClusterConfig, HeadConfig, WorkersGroupConfig
@@ -10,33 +8,43 @@ app = typer.Typer(no_args_is_help=True)
 @app.command(no_args_is_help=True)
 def create(name: str = typer.Option(..., prompt=True),
            ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
-           head_instance_type: Optional[str] = typer.Option(None),
-           default_workers_instance_type: Optional[str] = typer.Option(None),
-           default_workers_count: int = typer.Option(0)):
+           head_node: str = typer.Option(..., prompt=True),
+           default_workers_node: str = typer.Option(..., prompt=True),
+           default_workers_count: int = typer.Option(0),
+           default_workers_gpu: bool = typer.Option(False)):
     # build cluster config
     cluster_config = ClusterConfig(name,
                                    ns,
-                                   head=HeadConfig(instance_type=head_instance_type),
-                                   worker_groups=[WorkersGroupConfig(instance_type=default_workers_instance_type,
-                                                                     count=default_workers_count)])
+                                   head=HeadConfig(instance_type=head_node),
+                                   worker_groups=[WorkersGroupConfig(name="default",
+                                                                     instance_type=default_workers_node,
+                                                                     count=default_workers_count,
+                                                                     gpu=default_workers_gpu)])
     manager = ClusterManager(cluster_config)
-    manager.create_cluster()
+    manager.start_cluster()
 
     manager.save_config()
+
+
+@app.command(no_args_is_help=True)
+def start(name: str = typer.Option(..., prompt=True),
+          ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
+    manager = ClusterManager.load(name, ns)
+    manager.start_cluster()
 
 
 @app.command(no_args_is_help=True)
 def stop(name: str = typer.Option(..., prompt=True),
          ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
     manager = ClusterManager.load(name, ns)
-    manager.stop_cluster(stop_head=False)
+    manager.stop_cluster()
 
 
 @app.command(no_args_is_help=True)
 def terminate(name: str = typer.Option(..., prompt=True),
               ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
     manager = ClusterManager.load(name, ns)
-    manager.stop_cluster(stop_head=True)
+    manager.terminate_cluster()
 
 
 @app.command(no_args_is_help=True)
