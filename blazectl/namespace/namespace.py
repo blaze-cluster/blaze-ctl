@@ -69,7 +69,7 @@ class NamespaceManager:
 
     @staticmethod
     def config_name(ns: str):
-        return f"namespace~{ns}"
+        return f"namespace.{ns}"
 
     def save_config(self):
         Utils.save_config(NamespaceManager.config_name(self.namespace_config.name),

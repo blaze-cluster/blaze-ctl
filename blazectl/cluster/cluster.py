@@ -164,7 +164,7 @@ class ClusterManager:
 
     @staticmethod
     def config_name(name: str, ns: str):
-        return f"cluster~{ns}~{name}"
+        return f"cluster.{ns}.{name}"
 
     def save_config(self):
         Utils.save_config(ClusterManager.config_name(self.cluster_config.name, self.ns.name),
