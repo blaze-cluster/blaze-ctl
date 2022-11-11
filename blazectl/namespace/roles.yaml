@@ -6,7 +6,10 @@ metadata:
 rules:
   - apiGroups: [ "" ]
     resources: [ "pods", "pods/log", "services" ]
-    verbs: [ "get", "list", "watch" ]
+    verbs: [ "get", "list", "watch", "create" ]
+  - apiGroups: [ "" ]
+    resources: [ "pods/exec" ]
+    verbs: [ "get", "list", "watch", "create" ]
   - apiGroups: [ "ray.io" ]
     resources: [ "rayclusters" ]
     verbs: [ "get", "list", "watch", "create", "delete" ]
