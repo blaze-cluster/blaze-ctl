@@ -1,6 +1,6 @@
 import typer
 
-from blazectl.cluster.cluster import ClusterManager, ClusterConfig, HeadConfig, WorkersGroupConfig
+from blazectl.cluster.cluster import ClusterManager, ClusterConfig, HeadConfig, Platform, WorkersGroupConfig
 
 app = typer.Typer(no_args_is_help=True)
 
@@ -8,6 +8,7 @@ app = typer.Typer(no_args_is_help=True)
 @app.command(no_args_is_help=True)
 def create(name: str = typer.Option(..., prompt=True),
            ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
+           platform: Platform = typer.Option(..., case_sensitive=False, prompt=True),
            head_node: str = typer.Option(..., prompt=True),
            default_workers_node: str = typer.Option(..., prompt=True),
            default_workers_count: int = typer.Option(0),
@@ -15,6 +16,7 @@ def create(name: str = typer.Option(..., prompt=True),
     # build cluster config
     cluster_config = ClusterConfig(name,
                                    ns,
+                                   platform=platform,
                                    head=HeadConfig(instance_type=head_node),
                                    worker_groups=[WorkersGroupConfig(name="default",
                                                                      instance_type=default_workers_node,

@@ -14,12 +14,19 @@ from blazectl.commons.utils import Utils
 from blazectl.namespace.namespace import NamespaceManager
 
 
+class Platform(str, enum.Enum):
+    TF = "tf"
+    TORCH = "torch"
+
+
 @dataclass
 class ClusterSpec:
     ray_version: str = "2.0.0"
-    ray_image: str = "514352861371.dkr.ecr.ap-south-1.amazonaws.com/recsys/ray-ml:2.0.0"
+    blaze_image_path: str = "514352861371.dkr.ecr.ap-south-1.amazonaws.com/recsys/blaze"
     busybox_image: str = "514352861371.dkr.ecr.ap-south-1.amazonaws.com/recsys/busybox:latest"
-    aws_cli_image: str = "514352861371.dkr.ecr.ap-south-1.amazonaws.com/recsys/aws-cli:latest"
+
+    def blaze_image(self, platform: str, gpu: bool):
+        return f"{self.blaze_image_path}-{platform}:latest{'-gpu' if gpu else ''}"
 
 
 # @dataclass
@@ -45,6 +52,7 @@ class WorkersGroupConfig:
 class ClusterConfig:
     name: str
     ns: str
+    platform: str
     head: HeadConfig
     worker_groups: list[WorkersGroupConfig]
     # autoscaler: AutoscalerSpec = AutoscalerSpec()
@@ -223,7 +231,7 @@ class ClusterManager:
                             "containers": [
                                 {
                                     "name": "ray-head",
-                                    "image": self.cluster_config.spec.ray_image,
+                                    "image": self.cluster_config.spec.blaze_image(self.cluster_config.platform, False),
                                     "imagePullPolicy": "Always",
                                     "ports": [
                                         {
@@ -252,15 +260,6 @@ class ClusterManager:
                                     },
                                     "resources": self.get_resource_limits(self.cluster_config.head.instance_type),
                                     "volumeMounts": self.get_volume_mounts()
-                                },
-                                {
-                                    "name": "aws-app",
-                                    "image": self.cluster_config.spec.aws_cli_image,
-                                    "imagePullPolicy": "IfNotPresent",
-                                    "command": [
-                                        "sleep",
-                                        "3600"
-                                    ]
                                 }
                             ],
                             "volumes": self.get_volumes()
@@ -311,7 +310,7 @@ class ClusterManager:
                     "containers": [
                         {
                             "name": "worker",
-                            "image": self.cluster_config.spec.ray_image,
+                            "image": self.cluster_config.spec.blaze_image(self.cluster_config.platform, worker_config.gpu),
                             "imagePullPolicy": "Always",
                             "lifecycle": {
                                 "preStop": {
@@ -326,15 +325,6 @@ class ClusterManager:
                             },
                             "resources": resources,
                             "volumeMounts": self.get_volume_mounts()
-                        },
-                        {
-                            "name": "aws-app",
-                            "image": self.cluster_config.spec.aws_cli_image,
-                            "imagePullPolicy": "IfNotPresent",
-                            "command": [
-                                "sleep",
-                                "3600"
-                            ]
                         }
                     ]
                 }
