@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "blazectl"
-version = "0.2.0"
+version = "0.3.0"
 description = ""
 authors = ["Shailendra Sharma <shailendra.sharma@gmail.com>"]
 readme = "README.md"
