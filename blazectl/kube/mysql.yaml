@@ -1,8 +1,15 @@
+#apiVersion: storage.k8s.io/v1
+#kind: StorageClass
+#metadata:
+#  name: ${MYSQL_CLUSTER_NS}-${MYSQL_CLUSTER_NAME}-data
+#provisioner: ebs.csi.aws.com
+#allowVolumeExpansion: true
+#---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  namespace: foo
-  name: mycnf
+  namespace: ${MYSQL_CLUSTER_NS}
+  name: ${MYSQL_CLUSTER_NAME}-conf
 data:
   long_query_time: "5"
 #  innodb_buffer_pool_size: "10G"
@@ -10,47 +17,35 @@ data:
 apiVersion: moco.cybozu.com/v1beta2
 kind: BackupPolicy
 metadata:
-  namespace: backup
-  name: daily
+  namespace: ${MYSQL_CLUSTER_NS}
+  name: ${MYSQL_CLUSTER_NAME}-daily-backup
 spec:
-  # Backup schedule.  Any CRON format is allowed.
   schedule: "@daily"
 
   jobConfig:
-    # An existing ServiceAccount name is required.
-    serviceAccountName: backup-owner
-    env:
-    - name: AWS_ACCESS_KEY_ID
-      value: minioadmin
-    - name: AWS_SECRET_ACCESS_KEY
-      value: minioadmin
-
-    # bucketName is required.  Other fields are optional.
+    serviceAccountName: ${MYSQL_CLUSTER_SERVICE_ACCOUNT}
     bucketConfig:
-      bucketName: moco
-      endpointURL: http://minio.default.svc:9000
+      bucketName: ${MYSQL_CLUSTER_S3_BUCKET}
+#      prefix: /mysql/${MYSQL_CLUSTER_NAME}/dumps/
       usePathStyle: true
 
-    # MOCO uses a filesystem volume to store data temporarily.
     workVolume:
-      # Using emptyDir as a working directory is NOT recommended.
-      # The recommended way is to use generic ephemeral volume with a provisioner
-      # that can provide enough capacity.
-      # https://kubernetes.io/docs/concepts/storage/ephemeral-volumes/#generic-ephemeral-volumes
       emptyDir: {}
 ---
 apiVersion: moco.cybozu.com/v1beta2
 kind: MySQLCluster
 metadata:
-  namespace: default
-  name: test
+  namespace: ${MYSQL_CLUSTER_NS}
+  name: ${MYSQL_CLUSTER_NAME}
 spec:
-  mysqlConfigMapName: mycnf
-  backupPolicyName: daily
-  # replicas is the number of mysqld Pods.  The default is 1.
-  replicas: 3
+  mysqlConfigMapName: ${MYSQL_CLUSTER_NAME}-conf
+  backupPolicyName: ${MYSQL_CLUSTER_NAME}-daily-backup
+  replicas: 1
   podTemplate:
     spec:
+      nodeSelector:
+        intent: apps
+        node.kubernetes.io/instance-type: c6a.xlarge
       # Make the data directory writable. If moco-init fails with "Permission denied", uncomment the following settings.
       # securityContext:
       #   fsGroup: 10000
@@ -70,15 +65,12 @@ spec:
                       - test
               topologyKey: "kubernetes.io/hostname"
       containers:
-        # At least a container named "mysqld" must be defined.
         - name: mysqld
-          image: quay.io/cybozu/mysql:8.0.30
-          # By limiting CPU and memory, Pods will have Guaranteed QoS class.
-          # requests can be omitted; it will be set to the same value as limits.
+          image: quay.io/cybozu/mysql:8.0.31
           resources:
             limits:
-              cpu: "10"
-              memory: "10Gi"
+              memory: "6364Mi" # 6604
+              cpu: "3620m" # 4020
   volumeClaimTemplates:
     # At least a PVC named "mysql-data" must be defined.
     - metadata:
@@ -87,102 +79,18 @@ spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:
           requests:
-            storage: 1Gi
+            storage: 120Gi
   primaryServiceTemplate:
     metadata:
       annotations:
-        metallb.universe.tf/address-pool: production-public-ips
+#        service.beta.kubernetes.io/aws-load-balancer-nlb-target-type: nlb-ip
+        service.beta.kubernetes.io/aws-load-balancer-scheme: internal
+#        service.beta.kubernetes.io/aws-load-balancer-internal: "0.0.0.0/0"
+        service.beta.kubernetes.io/aws-load-balancer-type: nlb
     spec:
       type: LoadBalancer
----
-
-apiVersion: mysql.oracle.com/v2
-kind: InnoDBCluster
-metadata:
-  name: ${MYSQL_CLUSTER_NAME} # control-app-mysql
-spec:
-  secretName: ${MYSQL_CLUSTER_NAME}-pwd
-  tlsUseSelfSigned: true
-
-  instances: 3
-  version: 8.0.31
-
-  serviceAccountName: ${MYSQL_CLUSTER_NAME}-s3-access-sa
-
-  podSpec:
-    nodeSelector:
-      intent: apps
-      node.kubernetes.io/instance-type: c6g.xlarge
-
-    containers:
-      - name: mysql
-        resources:
-          requests:
-            memory: "6484Mi"
-            cpu: "3600m"
-          limits:
-            memory: "6484Mi"
-            cpu: "3820m"
-
-  router:
-    instances: 1
-    version: 8.0.31
-    podSpec:
-      nodeSelector:
-        intent: apps
-        node.kubernetes.io/instance-type: c6g.large
-
-      containers:
-        - name: mysql
-          resources:
-            requests:
-              memory: "3014Mi"
-              cpu: "1800m"
-            limits:
-              memory: "3014Mi"
-              cpu: "1830m"
-
-  datadirVolumeClaimTemplate:
-    accessModes:
-      - ReadWriteOnce
-    resources:
-      requests:
-        storage: 120Gi
-
-  #  initDB:
-  #    clone:
-  #      donorUrl: mycluster-0.mycluster-instances.another.svc.cluster.local:3306
-  #      rootUser: root
-  #      secretKeyRef:
-  #        name: mypwds
-
-  backupProfiles:
-    - name: ${MYSQL_CLUSTER_NAME}-dump-profile-s3
-      dumpInstance:
-        #      dumpOptions:
-        #        excludeSchemas: ["excludeme"]
-        storage:
-          s3:
-            prefix: /mysql/${MYSQL_CLUSTER_NAME}/dumps/
-            bucketName: ${EKS_CLUSTER_NAME}
-            config: ""
-    - name: ${MYSQL_CLUSTER_NAME}-snapshot-profile-s3
-      snapshot:
-        storage:
-          s3:
-            prefix: /mysql/${MYSQL_CLUSTER_NAME}/snapshots/
-            bucketName: ${EKS_CLUSTER_NAME}
-            config: ""
-
-  backupSchedules:
-    - name: schedule-ref
-      schedule: "*/1 * * * *"
-      deleteBackupData: false
-      backupProfileName: ${MYSQL_CLUSTER_NAME}-dump-profile-s3
-      enabled: true
-
-  mycnf: |
-    [mysqld]
-    max_connections=162
-    core_file
-    local_infile=off
+#  mycnf: |
+#    [mysqld]
+#    max_connections=162
+#    core_file
+#    local_infile=off
