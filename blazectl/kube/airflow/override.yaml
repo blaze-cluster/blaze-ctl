@@ -1,4 +1,38 @@
 # override.yaml
+nodeSelector:
+  intent: apps
+  node.kubernetes.io/instance-type: c6a.xlarge
+
+data:
+  metadataSecretName: airflow
+
+webserverSecretKeySecretName: my-webserver-secret
+
+workers:
+  persistence:
+    # Enable persistent volumes
+    enabled: true
+    # Volume size for worker StatefulSet
+    size: 500Gi
+    # If using a custom storageClass, pass name ref to all statefulSets here
+    storageClassName: gp2
+    # Execute init container to chown log directory.
+    # This is currently only needed in kind, due to usage
+    # of local-path provisioner.
+    fixPermissions: false
+    # Annotations to add to worker volumes
+    annotations:
+      volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/aws-ebs
+
+  nodeSelector:
+    intent: apps
+    node.kubernetes.io/instance-type: c6a.xlarge
+
+
+
+
+#####
+
 core:
   # SequentialExecutor, LocalExecutor, CeleryExecutor
   executor: CeleryExecutor
