@@ -1,0 +1,17 @@
+apiVersion: moco.cybozu.com/v1beta2
+kind: BackupPolicy
+metadata:
+  namespace: ${MYSQL_CLUSTER_NS}
+  name: ${MYSQL_CLUSTER_NAME}-daily-backup
+spec:
+  schedule: "@daily"
+
+  jobConfig:
+    serviceAccountName: ${MYSQL_CLUSTER_SERVICE_ACCOUNT}
+    bucketConfig:
+      bucketName: ${MYSQL_CLUSTER_S3_BUCKET}
+#      prefix: /mysql/${MYSQL_CLUSTER_NAME}/dumps/
+      usePathStyle: true
+
+    workVolume:
+      emptyDir: {}
