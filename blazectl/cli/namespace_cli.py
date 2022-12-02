@@ -1,6 +1,6 @@
 import typer
 
-from blazectl.namespace.config import NamespaceConfig, WorkerBlockDeviceConfig, FsxVolumeConfig
+from blazectl.namespace.config import FsxVolumeConfig, NamespaceConfig, WorkerBlockDeviceConfig
 from blazectl.namespace.namespace import NamespaceManager
 
 app = typer.Typer(no_args_is_help=True)
@@ -39,6 +39,12 @@ def set_gpu(ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
     manager.update_provisioner()
 
     manager.save_config()
+
+
+@app.command(no_args_is_help=True)
+def update_provisioner(ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
+    manager = NamespaceManager.load(ns)
+    manager.update_provisioner()
 
 
 @app.command(no_args_is_help=True)

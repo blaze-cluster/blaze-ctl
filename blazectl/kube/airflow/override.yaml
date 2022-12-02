@@ -1,7 +1,7 @@
 # override.yaml
 nodeSelector:
   intent: apps
-  node.kubernetes.io/instance-type: c6a.xlarge
+  node.kubernetes.io/instance-type: c6a.xlarge # non worker node
 
 data:
   metadataSecretName: airflow
@@ -28,6 +28,15 @@ workers:
     intent: apps
     node.kubernetes.io/instance-type: c6a.xlarge
 
+webserver:
+  defaultUser:
+    enabled: true
+    role: Admin
+    username: admin
+    email: shailendra.sharma@verse.in
+    firstName: admin
+    lastName: user
+    password: AdminUser@123
 
 
 
