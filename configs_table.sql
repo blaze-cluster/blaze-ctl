@@ -1,0 +1,5 @@
+CREATE TABLE configs
+(
+    id   VARCHAR(512) NOT NULL PRIMARY KEY,
+    data JSON
+);

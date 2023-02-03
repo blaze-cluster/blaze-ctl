@@ -80,8 +80,8 @@ class ProvisionerManager:
                     ],
                     "limits": {
                         "resources": {
-                            "cpu": 3000,
-                            "memory": "10000Gi"
+                            "cpu": 6000,
+                            "memory": "20000Gi"
                         }
                     },
                     "ttlSecondsUntilExpired": 2592000,

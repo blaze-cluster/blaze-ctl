@@ -98,7 +98,8 @@ def set_replicas(name: str = typer.Option(..., prompt=True),
             found = worker
 
     if found is None:
-        raise ValueError(f"Can not find workers-group={name}")
+        print(f"ERROR: Can not find workers-group={name}")
+        raise typer.Abort()
 
     found.count = count
     cluster_manager.start_cluster()

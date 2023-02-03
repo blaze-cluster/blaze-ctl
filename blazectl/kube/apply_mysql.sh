@@ -1,10 +1,11 @@
 set +x
 shopt -s nullglob
 
-export MYSQL_CLUSTER_NS=control-apps
+export CONTROL_APPS_NS=control-apps
+export MYSQL_CLUSTER_NS=$CONTROL_APPS_NS
 export MYSQL_CLUSTER_NAME=common-mysql
-export MYSQL_CLUSTER_SERVICE_ACCOUNT="josh-recsys-eks-cluster-control-apps-access-sa"
-export MYSQL_CLUSTER_S3_BUCKET="josh-recsys-eks-cluster-data"
+export MYSQL_CLUSTER_SERVICE_ACCOUNT="${EKS_CLUSTER_NAME}-${CONTROL_APPS_NS}-access-sa"
+export MYSQL_CLUSTER_S3_BUCKET="${EKS_CLUSTER_NAME}-${CONTROL_APPS_NS}-data"
 
 delete=""
 while [[ $# -gt 0 ]]; do

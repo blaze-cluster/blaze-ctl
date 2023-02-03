@@ -86,8 +86,9 @@ def delete_fsx_volume(ns: str = typer.Option(..., "--namespace", "-n", prompt=Tr
     items = [(index, item) for (index, item) in enumerate(manager.namespace_config.fsx_volumes)
              if item.volume_name == volume_name]
     if len(items) == 0:
-        raise ValueError(f"Didn't find volume of name:{volume_name} in namespace:{ns}",
-                         manager.namespace_config.fsx_volumes)
+        print(f"ERROR: Didn't find volume of name:{volume_name} in namespace:{ns}",
+              manager.namespace_config.fsx_volumes)
+        raise typer.Abort()
 
     for (index, item) in items:
         manager.fsx_volume_manager.delete_fsx_volume(item)

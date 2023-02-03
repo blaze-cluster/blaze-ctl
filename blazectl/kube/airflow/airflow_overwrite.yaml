@@ -1,0 +1,71 @@
+dags:
+  persistence:
+    accessMode: ReadWriteMany
+    enabled: true
+    size: 1000Gi
+    storageClassName: efs-sc
+  gitSync:
+    enabled: true
+    repo: https://gitlab.dailyhunt.in/josh-recsys/airflow-dags.git
+    branch: master
+    rev: HEAD
+    depth: 3
+    maxFailures: 0
+    subPath: "dags"
+    credentialsSecret: git-credentials
+    wait: 5
+    containerName: git-sync
+    uid: 65533
+data:
+  metadataSecretName: airflowdb-password
+pgbouncer:
+  enabled: true
+postgresql:
+  enabled: false
+redis:
+  enabled: true
+  persistence:
+    annotations:
+      volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/aws-ebs
+    enabled: true
+    size: 100Gi
+    storageClassName: gp2
+webserver:
+  service:
+    ports:
+    - name: airflow-ui
+      port: 80
+      targetPort: airflow-ui
+    type: ClusterIP
+  webserverConfig: |
+    from __future__ import annotations
+    import os
+    from airflow.www.fab_security.manager import AUTH_OAUTH
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    WTF_CSRF_ENABLED = True
+    AUTH_TYPE = AUTH_OAUTH
+    AUTH_USER_REGISTRATION = True
+    AUTH_USER_REGISTRATION_ROLE = "Admin"
+    OAUTH_PROVIDERS = [
+        {'name': 'google', 'icon': 'fa-google', 'token_key': 'access_token',
+         'remote_app': {
+             'client_id': '44319620395-kuu143bk40oqthges9qppteq6kjf8d8p.apps.googleusercontent.com',
+             'client_secret': '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',
+             'api_base_url': 'https://www.googleapis.com/oauth2/v2/',
+             'client_kwargs': {
+                 'scope': 'email profile'
+             },
+             'request_token_url': None,
+             'access_token_url': 'https://accounts.google.com/o/oauth2/token',
+             'authorize_url': 'https://accounts.google.com/o/oauth2/auth'}
+         },
+    ]
+webserverSecretKeySecretName: airflow-webserver-secret
+workers:
+  persistence:
+    annotations:
+      volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/aws-ebs
+    enabled: true
+    fixPermissions: false
+    size: 100Gi
+    storageClassName: gp2

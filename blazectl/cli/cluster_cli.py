@@ -6,9 +6,9 @@ app = typer.Typer(no_args_is_help=True)
 
 
 @app.command(no_args_is_help=True)
-def create(name: str = typer.Option(..., prompt=True),
+def create(name: str = typer.Option(..., "--name", "-c", prompt=True),
            ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
-           platform: Platform = typer.Option(..., case_sensitive=False, prompt=True),
+           platform: Platform = typer.Option(..., "--platform", "-p", case_sensitive=False, prompt=True),
            head_node: str = typer.Option(..., prompt=True),
            default_workers_node: str = typer.Option(..., prompt=True),
            default_workers_count: int = typer.Option(0),
@@ -27,28 +27,28 @@ def create(name: str = typer.Option(..., prompt=True),
 
 
 @app.command(no_args_is_help=True)
-def start(name: str = typer.Option(..., prompt=True),
+def start(name: str = typer.Option(..., "--name", "-c", prompt=True),
           ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
     manager = ClusterManager.load(name, ns)
     manager.start_cluster()
 
 
 @app.command(no_args_is_help=True)
-def stop(name: str = typer.Option(..., prompt=True),
+def stop(name: str = typer.Option(..., "--name", "-c", prompt=True),
          ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
     manager = ClusterManager.load(name, ns)
     manager.stop_cluster()
 
 
 @app.command(no_args_is_help=True)
-def terminate(name: str = typer.Option(..., prompt=True),
+def terminate(name: str = typer.Option(..., "--name", "-c", prompt=True),
               ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
     manager = ClusterManager.load(name, ns)
     manager.terminate_cluster()
 
 
 @app.command(no_args_is_help=True)
-def delete(name: str = typer.Option(..., prompt=True),
+def delete(name: str = typer.Option(..., "--name", "-c", prompt=True),
            ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
     manager = ClusterManager.load(name, ns)
     manager.delete_cluster()
@@ -57,7 +57,7 @@ def delete(name: str = typer.Option(..., prompt=True),
 
 
 @app.command(no_args_is_help=True)
-def restart(name: str = typer.Option(..., prompt=True),
+def restart(name: str = typer.Option(..., "--name", "-c", prompt=True),
             ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
             restart_head: bool = typer.Option(False)):
     manager = ClusterManager.load(name, ns)

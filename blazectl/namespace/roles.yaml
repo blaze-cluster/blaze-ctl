@@ -1,6 +1,37 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
+  name: default-user
+rules:
+  - apiGroups: [ "" ]
+    resources: [ "pods", "pods/log", "services" ]
+    verbs: [ "get", "list", "watch" ]
+  - apiGroups: [ "" ]
+    resources: [ "pods/exec" ]
+    verbs: [ "get", "list", "watch" ]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: default-user
+subjects:
+  - kind: Group
+    name: in-ai-labs-group
+    apiGroup: rbac.authorization.k8s.io
+  - kind: Group
+    name: us-labs-group
+    apiGroup: rbac.authorization.k8s.io
+  - kind: Group
+    name: all-labs-group
+    apiGroup: rbac.authorization.k8s.io
+roleRef:
+  kind: Role
+  name: default-user
+  apiGroup: rbac.authorization.k8s.io
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
   namespace: $BLAZE_CLUSTER_NS
   name: blaze-user
 rules:
@@ -21,7 +52,13 @@ metadata:
   namespace: $BLAZE_CLUSTER_NS
 subjects:
   - kind: Group
-    name: $ROLE_GROUP
+    name: in-ai-labs-group
+    apiGroup: rbac.authorization.k8s.io
+  - kind: Group
+    name: us-labs-group
+    apiGroup: rbac.authorization.k8s.io
+  - kind: Group
+    name: all-labs-group
     apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
