@@ -37,29 +37,7 @@ webserver:
       port: 80
       targetPort: airflow-ui
     type: ClusterIP
-  webserverConfig: |
-    from __future__ import annotations
-    import os
-    from airflow.www.fab_security.manager import AUTH_OAUTH
-    basedir = os.path.abspath(os.path.dirname(__file__))
-    WTF_CSRF_ENABLED = True
-    AUTH_TYPE = AUTH_OAUTH
-    AUTH_USER_REGISTRATION = True
-    AUTH_USER_REGISTRATION_ROLE = "Admin"
-    OAUTH_PROVIDERS = [
-        {'name': 'google', 'icon': 'fa-google', 'token_key': 'access_token',
-         'remote_app': {
-             'client_id': '44319620395-kuu143bk40oqthges9qppteq6kjf8d8p.apps.googleusercontent.com',
-             'client_secret': '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',
-             'api_base_url': 'https://www.googleapis.com/oauth2/v2/',
-             'client_kwargs': {
-                 'scope': 'email profile'
-             },
-             'request_token_url': None,
-             'access_token_url': 'https://accounts.google.com/o/oauth2/token',
-             'authorize_url': 'https://accounts.google.com/o/oauth2/auth'}
-         },
-    ]
+  webserverConfig: TODO FIX IT
 webserverSecretKeySecretName: airflow-webserver-secret
 workers:
   persistence:
