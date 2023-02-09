@@ -8,6 +8,7 @@ from copy import deepcopy
 from dataclasses import dataclass
 
 import dacite
+import typer
 from kubernetes import client as kube_client, config as kube_config, watch as kube_watch
 
 from blazectl.commons.utils import Utils
@@ -119,7 +120,7 @@ class ClusterManager:
         current_counts = {"head": 0, "worker": 0}
 
         watch = kube_watch.Watch()
-        kube_config.load_kube_config()
+        kube_config.load_config()
         kube_api = kube_client.CoreV1Api()
         for event in watch.stream(func=kube_api.list_namespaced_pod,
                                   namespace=self.ns.name,
@@ -382,13 +383,16 @@ class ClusterManager:
     def get_resource_limits(self, instance_type: str, gpu: bool = False):
         data = self.instance_types_map.get(instance_type)
         if data is None:
-            raise ValueError(f"Invalid instance type: {instance_type} - not found")
+            print(f"Invalid instance type: {instance_type} - not found")
+            raise typer.Abort()
 
         if gpu and data.get("nvidia.com/gpu") is None:
-            raise ValueError(f"Invalid instance type: {instance_type} - not a gpu instance")
+            print(f"Invalid instance type: {instance_type} - not a gpu instance")
+            raise typer.Abort()
 
         if not gpu and data.get("nvidia.com/gpu") is not None:
-            raise ValueError(f"Invalid instance type: {instance_type} - a gpu instance but gpu support is not needed")
+            print(f"Invalid instance type: {instance_type} - a gpu instance but gpu support is not needed")
+            raise typer.Abort()
 
         cpu = int(data.get("cpu").rstrip("m")) // 1024
         memory = data.get("memory")

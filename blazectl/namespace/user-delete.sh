@@ -31,9 +31,7 @@ if [ "$GROUP" == "" ]; then
   exit 1
 fi
 
-eksctl create iamidentitymapping \
+eksctl delete iamidentitymapping --all \
     --cluster "${EKS_CLUSTER_NAME}" \
     --region="${AWS_DEFAULT_REGION}" \
-    --arn arn:aws:iam::"${AWS_ACCOUNT_ID}":user/"$USER" \
-    --group "${GROUP}" \
-    --no-duplicate-arns
+    --arn arn:aws:iam::"${AWS_ACCOUNT_ID}":user/"$USER"

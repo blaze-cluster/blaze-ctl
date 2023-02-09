@@ -1,0 +1,8 @@
+{
+  "kind": "db",
+  "host": "moco-common-mysql.control-apps",
+  "port": 3306,
+  "user": "blaze",
+  "password": "bl@zeu$er",
+  "database": "blaze_cluster"
+}

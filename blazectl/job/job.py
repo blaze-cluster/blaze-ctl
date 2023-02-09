@@ -43,7 +43,8 @@ class JobManager:
                 # conda: list[str] = None,
                 on_job_run: ClusterStateOnJobRun = ClusterStateOnJobRun.NOTHING,
                 on_job_success: ClusterStateOnJobEnd = ClusterStateOnJobEnd.NOTHING,
-                on_job_failure: ClusterStateOnJobEnd = ClusterStateOnJobEnd.NOTHING):
+                on_job_failure: ClusterStateOnJobEnd = ClusterStateOnJobEnd.NOTHING,
+                wait_for_job_end: bool = True):
 
         self.set_cluster_state_on_job_run(on_job_run)
 
@@ -61,9 +62,10 @@ class JobManager:
         # open dashboard in new tab
         webbrowser.open(svc_addr, new=2)
 
-        self.wait_until_job_end(job_id,
-                                on_job_success=on_job_success,
-                                on_job_failure=on_job_failure)
+        if wait_for_job_end:
+            self.wait_until_job_end(job_id,
+                                    on_job_success=on_job_success,
+                                    on_job_failure=on_job_failure)
 
     def stop_job(self,
                  job_id,
@@ -137,7 +139,7 @@ class JobManager:
 
     @staticmethod
     def get_svc_addr(cluster_ns: str, cluster_name: str):
-        kube_config.load_kube_config()
+        kube_config.load_config()
         v1_api = kube_client.CoreV1Api()
         result = v1_api.read_namespaced_service(name=f"{cluster_name}-head-svc", namespace=cluster_ns)
 

@@ -1,6 +1,6 @@
 import typer
 
-from blazectl.namespace.config import NamespaceConfig, WorkerBlockDeviceConfig, FsxVolumeConfig
+from blazectl.namespace.config import FsxVolumeConfig, NamespaceConfig, WorkerBlockDeviceConfig
 from blazectl.namespace.namespace import NamespaceManager
 
 app = typer.Typer(no_args_is_help=True)
@@ -42,6 +42,12 @@ def set_gpu(ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
 
 
 @app.command(no_args_is_help=True)
+def update_provisioner(ns: str = typer.Option(..., "--namespace", "-n", prompt=True)):
+    manager = NamespaceManager.load(ns)
+    manager.update_provisioner()
+
+
+@app.command(no_args_is_help=True)
 def set_sa_policy(ns: str = typer.Option(..., "--namespace", "-n", prompt=True),
                   arn: str = typer.Option(..., prompt=True)):
     manager = NamespaceManager.load(ns)
@@ -80,8 +86,9 @@ def delete_fsx_volume(ns: str = typer.Option(..., "--namespace", "-n", prompt=Tr
     items = [(index, item) for (index, item) in enumerate(manager.namespace_config.fsx_volumes)
              if item.volume_name == volume_name]
     if len(items) == 0:
-        raise ValueError(f"Didn't find volume of name:{volume_name} in namespace:{ns}",
-                         manager.namespace_config.fsx_volumes)
+        print(f"ERROR: Didn't find volume of name:{volume_name} in namespace:{ns}",
+              manager.namespace_config.fsx_volumes)
+        raise typer.Abort()
 
     for (index, item) in items:
         manager.fsx_volume_manager.delete_fsx_volume(item)

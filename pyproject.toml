@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "blazectl"
-version = "0.3.0"
+version = "0.4.3"
 description = ""
 authors = ["Shailendra Sharma <shailendra.sharma@gmail.com>"]
 readme = "README.md"
@@ -13,12 +13,14 @@ blazectl = "blazectl.cli.main_cli:app"
 python = "^3.9"
 typer = "0.7"
 rich = "^12.6.0"
-shellingham = "^1.5.0"
+shellingham = "^1.5.0.post1"
 kubernetes = "^25.3.0"
 dacite = "^1.6.0"
-ray = {extras = ["default"], version = "^2.1.0"}
+ray = {extras = ["default"], version = "^2.2.0"}
 pyfiglet = "^0.8.post1"
 dnspython = "^2.2.1"
+pydantic = "^1.10.4"
+mysql-connector-python = "^8.0.32"
 
 [tool.poetry.dev-dependencies]
 pytest = "^5.2"

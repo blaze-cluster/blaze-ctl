@@ -28,3 +28,11 @@ Each namespace has two group of users -
 ## Install
 
 `pip install blazectl`
+
+## Build
+
+`poetry build`
+
+## Publish
+
+`poetry publish`

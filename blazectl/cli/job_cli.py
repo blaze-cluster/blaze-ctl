@@ -16,7 +16,8 @@ def run(cluster_name: str = typer.Option(..., "--cluster-name", "-c", prompt=Tru
         # conda: Optional[list[str]] = typer.Option(None),
         on_job_run: ClusterStateOnJobRun = typer.Option(ClusterStateOnJobRun.NOTHING, case_sensitive=False),
         on_job_success: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.NOTHING, case_sensitive=False),
-        on_job_failure: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.NOTHING, case_sensitive=False)
+        on_job_failure: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.NOTHING, case_sensitive=False),
+        wait_for_job_end: bool = typer.Option(True)
         ):
     job_manager = JobManager(cluster_name, cluster_ns)
     job_manager.run_job(entrypoint=entrypoint,
@@ -25,7 +26,8 @@ def run(cluster_name: str = typer.Option(..., "--cluster-name", "-c", prompt=Tru
                         # conda=conda,
                         on_job_run=on_job_run,
                         on_job_success=on_job_success,
-                        on_job_failure=on_job_failure)
+                        on_job_failure=on_job_failure,
+                        wait_for_job_end=wait_for_job_end)
 
 
 @app.command(no_args_is_help=True)

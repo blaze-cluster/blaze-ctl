@@ -1,0 +1,49 @@
+dags:
+  persistence:
+    accessMode: ReadWriteMany
+    enabled: true
+    size: 1000Gi
+    storageClassName: efs-sc
+  gitSync:
+    enabled: true
+    repo: https://gitlab.dailyhunt.in/josh-recsys/airflow-dags.git
+    branch: master
+    rev: HEAD
+    depth: 3
+    maxFailures: 0
+    subPath: "dags"
+    credentialsSecret: git-credentials
+    wait: 5
+    containerName: git-sync
+    uid: 65533
+data:
+  metadataSecretName: airflowdb-password
+pgbouncer:
+  enabled: true
+postgresql:
+  enabled: false
+redis:
+  enabled: true
+  persistence:
+    annotations:
+      volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/aws-ebs
+    enabled: true
+    size: 100Gi
+    storageClassName: gp2
+webserver:
+  service:
+    ports:
+    - name: airflow-ui
+      port: 80
+      targetPort: airflow-ui
+    type: ClusterIP
+  webserverConfig: TODO FIX IT
+webserverSecretKeySecretName: airflow-webserver-secret
+workers:
+  persistence:
+    annotations:
+      volume.beta.kubernetes.io/storage-provisioner: kubernetes.io/aws-ebs
+    enabled: true
+    fixPermissions: false
+    size: 100Gi
+    storageClassName: gp2

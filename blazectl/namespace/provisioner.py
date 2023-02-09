@@ -80,8 +80,8 @@ class ProvisionerManager:
                     ],
                     "limits": {
                         "resources": {
-                            "cpu": 3000,
-                            "memory": "10000Gi"
+                            "cpu": 6000,
+                            "memory": "20000Gi"
                         }
                     },
                     "ttlSecondsUntilExpired": 2592000,
@@ -118,9 +118,18 @@ class ProvisionerManager:
                         "provisioner/type": "karpenter",
                         "provisioner/name": f"blaze-cluster-{self.namespace_config.name}-{kind.value}",
                         "blaze-cluster/namespace": self.namespace_config.name,
-                        "blaze-cluster/node-type": kind.value
+                        "blaze-cluster/node-type": kind.value,
+
+                        # tags enforced by infra team
+                        "resource": "compute",
+                        "service": "ml_training",
+                        "owner": self.namespace_config.name,
+                        "role": self.namespace_config.name,
+                        "env": "prod",
+                        "createdby": self.namespace_config.name,
+                        "bu": "josh",
+                        "cloud": "aws"
                     }
                 }
             }
-
         ]
