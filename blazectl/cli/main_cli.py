@@ -3,10 +3,10 @@ import typer
 from blazectl.commons.configuration import ConfigStoreKind, DBConfiguration, LocalConfiguration
 from blazectl.commons.utils import Utils
 
-from .cluster_cli import app as cluster_app
-from .job_cli import app as job_app
-from .namespace_cli import app as ns_app
-from .workers_cli import app as worker_app
+from blazectl.cli.cluster_cli import app as cluster_app
+from blazectl.cli.job_cli import app as job_app
+from blazectl.cli.namespace_cli import app as ns_app
+from blazectl.cli.workers_cli import app as worker_app
 
 app = typer.Typer(no_args_is_help=True)
 

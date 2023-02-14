@@ -2,6 +2,7 @@ import asyncio
 import enum
 import time
 import webbrowser
+from typing import Optional
 
 import dns.resolver
 from kubernetes import client as kube_client, config as kube_config
@@ -40,7 +41,7 @@ class JobManager:
                 entrypoint: str,
                 working_dir: str = "./",
                 pip: list[str] = None,
-                # conda: list[str] = None,
+                job_id: Optional[str] = None,
                 on_job_run: ClusterStateOnJobRun = ClusterStateOnJobRun.NOTHING,
                 on_job_success: ClusterStateOnJobEnd = ClusterStateOnJobEnd.NOTHING,
                 on_job_failure: ClusterStateOnJobEnd = ClusterStateOnJobEnd.NOTHING,
@@ -51,10 +52,10 @@ class JobManager:
         svc_addr, job_client = self.get_job_client()
         job_id = job_client.submit_job(
             entrypoint=entrypoint,
+            submission_id=job_id,
             runtime_env={
                 "working_dir": working_dir,
                 "pip": pip,
-                # "conda": conda
             }
         )
         print(f"JOB_ID:{job_id} is submitted on {svc_addr}")
