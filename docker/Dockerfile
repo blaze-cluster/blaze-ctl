@@ -5,7 +5,7 @@ RUN apt update && \
       chmod +x ./kubectl && \
       mv ./kubectl /bin/
 
-RUN pip install blazectl==0.5.0
+RUN pip install blazectl==0.5.1
 
 WORKDIR /root
 ADD config/* .blazectl/
