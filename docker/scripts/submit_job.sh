@@ -5,6 +5,7 @@ usage() {
   echo "Usage:
           submit_job  [ -c | --cluster CLUSTER ]
                       [ -n | --namespace NAMESPACE ]
+                      [ -j | --job-id JOB_ID ]
                       [ -e | --entrypoint ENTRYPOINT ]
                       [ -g | --giturl FULLY QUALIFIED GIT URL eg https://username:password@github.com/username/repository.git ]
                       [ -d | --deps EXTRA DEPENDENCIES ]
@@ -16,10 +17,11 @@ CLUSTER=""
 NAMESPACE=""
 GIT_URL=""
 ENTRYPOINT=""
+JOB_ID=""
 EXTRA_DEPS="--pip overrides --pip xxhash --pip wandb --pip mlflow --pip retry --pip importlib --pip smart_open --pip hydra-core --pip pydantic --pip hnswlib --pip s3fs"
 
-SHORT_OPTS=c:,n:,e:,g:,d::,h
-LONG_OPTS=cluster:,namespace:,entrypoint:,giturl:,deps::,help
+SHORT_OPTS=c:,n:,j:,e:,g:,d::,h
+LONG_OPTS=cluster:,namespace:,job-id:,entrypoint:,giturl:,deps::,help
 PARSED_ARGUMENTS=$(getopt -a -n submit_job --options $SHORT_OPTS --longoptions $LONG_OPTS -- "$@")
 echo "PARSED_ARGUMENTS is $PARSED_ARGUMENTS"
 if [ "$PARSED_ARGUMENTS" == "--" ]; then
@@ -35,6 +37,10 @@ while :; do
     ;;
   -n | --namespace)
     NAMESPACE="$2"
+    shift 2
+    ;;
+  -j | --job-id)
+    JOB_ID="$2"
     shift 2
     ;;
   -e | --entrypoint)
@@ -78,4 +84,4 @@ git -c credential.helper='!f() { sleep 1; echo "username=${GIT_USERNAME}"; echo 
 
 #git clone "${GIT_URL}" . || exit
 
-blazectl job run -c "${CLUSTER}" -n "${NAMESPACE}" -e "${ENTRYPOINT}" --no-wait-for-job-end ${EXTRA_DEPS}
+blazectl job run -c "${CLUSTER}" -n "${NAMESPACE}" -j "${JOB_ID}" -e "${ENTRYPOINT}" --no-wait-for-job-end ${EXTRA_DEPS}

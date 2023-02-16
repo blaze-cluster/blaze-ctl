@@ -47,6 +47,10 @@ class JobManager:
                 on_job_failure: ClusterStateOnJobEnd = ClusterStateOnJobEnd.NOTHING,
                 wait_for_job_end: bool = True):
 
+        # set empty job id as None
+        if job_id is not None and job_id == "":
+            job_id = None
+
         self.set_cluster_state_on_job_run(on_job_run)
 
         svc_addr, job_client = self.get_job_client()

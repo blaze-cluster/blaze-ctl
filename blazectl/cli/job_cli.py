@@ -13,7 +13,7 @@ def run(cluster_name: str = typer.Option(..., "--cluster-name", "-c", prompt=Tru
         entrypoint: str = typer.Option(..., "--entrypoint", "-e", prompt=True),
         working_dir: str = typer.Option("./"),
         pip: Optional[list[str]] = typer.Option(None),
-        job_id: Optional[str] = typer.Option(None),
+        job_id: Optional[str] = typer.Option(None, "--job-id", "-j"),
         # conda: Optional[list[str]] = typer.Option(None),
         on_job_run: ClusterStateOnJobRun = typer.Option(ClusterStateOnJobRun.NOTHING, case_sensitive=False),
         on_job_success: ClusterStateOnJobEnd = typer.Option(ClusterStateOnJobEnd.NOTHING, case_sensitive=False),
