@@ -1,0 +1,71 @@
+Name:         blaze-cluster-us-labs-worker
+Namespace:    
+Labels:       <none>
+Annotations:  <none>
+API Version:  karpenter.k8s.aws/v1alpha1
+Kind:         AWSNodeTemplate
+Metadata:
+  Creation Timestamp:  2022-11-10T14:02:26Z
+  Generation:          2
+  Managed Fields:
+    API Version:  karpenter.k8s.aws/v1alpha1
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .:
+          f:kubectl.kubernetes.io/last-applied-configuration:
+      f:spec:
+        .:
+        f:blockDeviceMappings:
+        f:securityGroupSelector:
+          .:
+          f:alpha.eksctl.io/cluster-name:
+        f:subnetSelector:
+          .:
+          f:alpha.eksctl.io/cluster-name:
+        f:tags:
+          .:
+          f:blaze-cluster/namespace:
+          f:blaze-cluster/node-type:
+          f:bu:
+          f:cloud:
+          f:createdby:
+          f:env:
+          f:intent:
+          f:owner:
+          f:provisioner/name:
+          f:provisioner/type:
+          f:resource:
+          f:role:
+          f:service:
+    Manager:         kubectl-client-side-apply
+    Operation:       Update
+    Time:            2022-12-02T02:25:25Z
+  Resource Version:  32751285
+  UID:               f1f72df2-15fb-4e14-a5eb-122c173cb1d9
+Spec:
+  Block Device Mappings:
+    Device Name:  /dev/xvda
+    Ebs:
+      Volume Size:  120Gi
+      Volume Type:  gp3
+  Security Group Selector:
+    alpha.eksctl.io/cluster-name:  josh-recsys-eks-cluster
+  Subnet Selector:
+    alpha.eksctl.io/cluster-name:  josh-recsys-eks-cluster
+  Tags:
+    blaze-cluster/namespace:  us-labs
+    blaze-cluster/node-type:  worker
+    Bu:                       josh
+    Cloud:                    aws
+    Createdby:                us-labs
+    Env:                      prod
+    Intent:                   blaze-cluster-worker-node
+    Owner:                    us-labs
+    provisioner/name:         blaze-cluster-us-labs-worker
+    provisioner/type:         karpenter
+    Resource:                 compute
+    Role:                     us-labs
+    Service:                  ml_training
+Events:                       <none>

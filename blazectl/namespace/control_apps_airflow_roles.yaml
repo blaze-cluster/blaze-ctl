@@ -1,24 +1,21 @@
 apiVersion: rbac.authorization.k8s.io/v1
 kind: Role
 metadata:
-  namespace: $BLAZE_CLUSTER_NS
-  name: blaze-user
+  namespace: control-apps-airflow
+  name: control-apps-user
 rules:
   - apiGroups: [ "" ]
     resources: [ "pods", "pods/log", "services" ]
-    verbs: [ "get", "list", "watch", "create" ]
+    verbs: [ "get", "list", "watch" ]
   - apiGroups: [ "" ]
     resources: [ "pods/exec" ]
     verbs: [ "get", "list", "watch", "create" ]
-  - apiGroups: [ "ray.io" ]
-    resources: [ "rayclusters" ]
-    verbs: [ "get", "list", "watch", "create", "delete" ]
 ---
 apiVersion: rbac.authorization.k8s.io/v1
 kind: RoleBinding
 metadata:
-  name: blaze-user
-  namespace: $BLAZE_CLUSTER_NS
+  namespace: control-apps-airflow
+  name: control-apps-user
 subjects:
   - kind: Group
     name: in-ai-labs-group
@@ -31,5 +28,5 @@ subjects:
     apiGroup: rbac.authorization.k8s.io
 roleRef:
   kind: Role
-  name: blaze-user
+  name: control-apps-user
   apiGroup: rbac.authorization.k8s.io

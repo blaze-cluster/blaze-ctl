@@ -1,0 +1,122 @@
+Name:         blaze-cluster-us-labs-worker
+Namespace:    
+Labels:       <none>
+Annotations:  <none>
+API Version:  karpenter.sh/v1alpha5
+Kind:         Provisioner
+Metadata:
+  Creation Timestamp:  2022-11-10T14:02:26Z
+  Generation:          2
+  Managed Fields:
+    API Version:  karpenter.sh/v1alpha5
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .:
+          f:kubectl.kubernetes.io/last-applied-configuration:
+      f:spec:
+        .:
+        f:labels:
+          .:
+          f:blaze-cluster/namespace:
+          f:blaze-cluster/node-type:
+          f:intent:
+          f:provisioner/name:
+          f:provisioner/type:
+        f:limits:
+          .:
+          f:resources:
+            .:
+            f:cpu:
+            f:memory:
+        f:providerRef:
+          .:
+          f:name:
+        f:requirements:
+        f:ttlSecondsAfterEmpty:
+        f:ttlSecondsUntilExpired:
+    Manager:      kubectl-client-side-apply
+    Operation:    Update
+    Time:         2022-11-10T14:02:26Z
+    API Version:  karpenter.sh/v1alpha5
+    Fields Type:  FieldsV1
+    fieldsV1:
+      f:status:
+        f:resources:
+          .:
+          f:attachable-volumes-aws-ebs:
+          f:cpu:
+          f:ephemeral-storage:
+          f:memory:
+          f:nvidia.com/gpu:
+          f:pods:
+    Manager:         karpenter
+    Operation:       Update
+    Subresource:     status
+    Time:            2022-11-14T20:47:56Z
+  Resource Version:  125926811
+  UID:               91765034-c771-4506-b80f-2e80d20bf62c
+Spec:
+  Labels:
+    blaze-cluster/namespace:  us-labs
+    blaze-cluster/node-type:  worker
+    Intent:                   blaze-cluster-worker-node
+    provisioner/name:         blaze-cluster-us-labs-worker
+    provisioner/type:         karpenter
+  Limits:
+    Resources:
+      Cpu:     6k
+      Memory:  20000Gi
+  Provider Ref:
+    Name:  blaze-cluster-us-labs-worker
+  Requirements:
+    Key:       karpenter.sh/capacity-type
+    Operator:  In
+    Values:
+      on-demand
+    Key:       karpenter.k8s.aws/instance-family
+    Operator:  In
+    Values:
+      c6a
+      m6a
+      r6a
+      c5a
+      m5a
+      r5a
+      p4d
+      p4de
+      p3
+      p3dn
+      p2
+      dl1
+      trn1
+      inf1
+      g5
+      g5g
+      g4dn
+      g4ad
+      g3
+      f1
+      vt1
+    Key:       karpenter.k8s.aws/instance-size
+    Operator:  NotIn
+    Values:
+      nano
+      micro
+      small
+    Key:       kubernetes.io/arch
+    Operator:  In
+    Values:
+      amd64
+  Ttl Seconds After Empty:    20
+  Ttl Seconds Until Expired:  2592000
+Status:
+  Resources:
+    Attachable - Volumes - Aws - Ebs:  507
+    Cpu:                               2352
+    Ephemeral - Storage:               1758301948Ki
+    Memory:                            9799274004Ki
+    nvidia.com/gpu:                    96
+    Pods:                              5550
+Events:                                <none>
